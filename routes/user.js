@@ -21,7 +21,7 @@ router.get('/login', function(req, res) {
 
 // process the login form
 router.post('/login', passport.authenticate('local-login', {
-    successRedirect: '/user/profile', // redirect to the secure profile section
+    successRedirect: '/', // redirect to the secure profile section
     failureRedirect: '/user/login', // redirect back to the signup page if there is an error
     failureFlash: true // allow flash messages
 }));
@@ -30,6 +30,7 @@ router.post('/login', passport.authenticate('local-login', {
 // =====================================
 // show the signup form
 router.get('/signup', function(req, res) {
+    console.log(req.body);
 
     // render the page and pass in any flash data if it exists
     res.render('signup', {

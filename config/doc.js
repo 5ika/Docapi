@@ -3,11 +3,12 @@ var Document = require('../models/document');
 var doc = new Object();
 
 // Ajouter un document
-doc.add = function(titre, contenu, callback) {
+doc.add = function(titre, contenu, userID, callback) {
     var newDoc = new Document({
         date: Date.now(),
         title: titre,
-        content: contenu
+        content: contenu,
+        user: userID
     });
     newDoc.save(function(err) {
         if (err) {
@@ -15,7 +16,8 @@ doc.add = function(titre, contenu, callback) {
         }
         Document.findOne({
             title: newDoc.title,
-            date: newDoc.date
+            date: newDoc.date,
+            user: newDoc.user
         }, function(err, document) {
             callback('Document ajouté', document._id);
         })
@@ -23,9 +25,10 @@ doc.add = function(titre, contenu, callback) {
 }
 
 // Modifier un document
-doc.update = function(id, titre, contenu, callback) {
+doc.update = function(id, titre, contenu, userID, callback) {
     Document.findOneAndUpdate({
-        _id: id
+        _id: id,
+        user: userID
     }, {
         date: Date.now(),
         title: titre,
@@ -39,17 +42,20 @@ doc.update = function(id, titre, contenu, callback) {
 }
 
 // Récupérer un document
-doc.get = function(id, callback) {
+doc.get = function(id, userID, callback) {
     Document.findOne({
-        _id: id
+        _id: id,
+        user: userID
     }, function(err, document) {
         callback(null, document);
     })
 }
 
 // Récupérer la liste des documents
-doc.getList = function(callback) {
-    Document.find({}, {
+doc.getList = function(userID, callback) {
+    Document.find({
+        user: userID
+    }, {
         content: 0,
         __v: 0
     }, {
@@ -66,8 +72,11 @@ doc.getList = function(callback) {
 }
 
 // Supprimer un document
-doc.del = function(id, callback) {
-    Document.findOneAndRemove(id, function(err, document) {
+doc.del = function(id, userID, callback) {
+    Document.findOneAndRemove({
+        _id: id,
+        user: userID
+    }, function(err, document) {
         if (!err) callback("Le document a bien été supprimé");
         else callback('Pas de document avec cet id');
     })

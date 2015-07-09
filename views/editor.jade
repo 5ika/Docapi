@@ -1,28 +1,40 @@
 extends layout
 
 block content
+    .header
+        h4 Édition
+    .user
+        a.btn.btn-flat(href='/user/profile')
+            if(user)
+                | #{user}
+            else
+                | No user
     .row
-        .row#menu
-            a(onclick="toMarkdown()").btn.btn-flat.waves-effect.waves-light Convertir
-            a(onclick="send()").btn.btn-flat.waves-effect.waves-light Sauver
-            a(onclick="del()").btn.btn-flat.waves-effect.waves-light Supprimer
-            a.waves-effect.waves-light.btn.btn-flat.modal-trigger(href='#modal-list') Liste
-            a(onclick="toogleLarge()").btn.btn-flat.waves-effect.waves-light.hide-on-small-only#large-btn Large
-        form.col.m6.s12#editor
-            .row
-                .input-field.col.s12
-                    if(document)
-                        input#title(type="text" value='#{document.title}').validate
-                    else
-                        input#title(type="text").validate
-                    label(for='title') Titre                    
-            .row
-                .input-field.col.s12
-                    if(document)
-                        textarea#content.materialize-textarea #{document.content}
-                    else 
-                        textarea#content.materialize-textarea
-                    label(for='content') Contenu
+        #editor.col.m6.s12    
+            .col.s12.m12
+                a(onclick="send()").btn.btn-flat.waves-effect.waves-light Sauver
+                a(onclick="del()").btn.btn-flat.waves-effect.waves-light Supprimer
+                a.waves-effect.waves-light.btn.btn-flat.modal-trigger(href='#modal-list') Liste
+                a(onclick="toMarkdown()").btn.btn-flat.waves-effect.waves-light Convertir
+                if(document)
+                    a(href="/api/dl/#{document._id}.txt" target='_blank').waves-effect.waves-light.btn.btn-flat Télécharger
+                    a(onclick="newDocument()").btn.btn-flat.waves-effect.waves-light Nouveau
+                a(onclick="toogleLarge()").btn.btn-flat.waves-effect.waves-light.hide-on-small-only#large-btn Large
+            form.col.m12.s12
+                .row
+                    .input-field.col.s12
+                        if(document)
+                            input#title(type="text" value='#{document.title}').validate
+                        else
+                            input#title(type="text").validate
+                        label(for='title') Titre                    
+                .row
+                    .input-field.col.s12
+                        if(document)
+                            textarea#content.materialize-textarea #{document.content}
+                        else 
+                            textarea#content.materialize-textarea
+                        label(for='content') Contenu
         p#view.col.m6.s12
                     
 block script

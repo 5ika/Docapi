@@ -21,11 +21,11 @@ function send() {
         $('.link-' + id).text(document.title);
     }
     $.post("/api", document, function(data) {
-        if (data) {
+        if (data && !data.hasOwnProperty('error')) {
             id = data.id;
             toast(data.message, 2000);
             if (data.redirectToEdit) window.location.href = '/' + id;
-        } else toast("Serveur inatteignable", 2000);
+        } else toast("Problème serveur. Document non sauvé.", 2000);
     });
 };
 
@@ -40,6 +40,10 @@ function del() {
         });
     else toast("Document non sauvé", 2000);
 };
+
+function newDocument() {
+    window.location.href = '/'
+}
 
 function toogleLarge() {
     if (large) {

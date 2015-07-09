@@ -1,29 +1,32 @@
 extends layout
 
 block content
-    .container
+    .container.row
         .page-header
-            h1
-                span.fa.fa-user  User's informations 
-            a(href='/user/logout').btn.btn-default.btn-sm 
-                .fa.fa-sign-out Logout
-        .col-sm-12
-            .well
-                h3
-                    .fa.fa-user-secret   Informations
-                | <strong>id :</strong> !{user._id} <br>
-                | <strong>email :</strong> !{user.local.email} <br>
-                //| <strong>password :</strong> !{user.local.password} <br>
-                <br>
-            button.btn.btn-primary.btn-block.btn-lg#getToken Get a token
-                
-            .well.hiddendiv#token-well
-                h3
-                    .fa.fa-key  Token
+            h1 Profil de #{user.local.name}
+        .col.m3.s12
+            .menu-profile
+                a(href='/').btn
+                    .fa.fa-edit  Editor
+                button.btn#getToken 
+                    .fa.fa-key  Get a token
+                a(href='/user/logout').btn
+                    .fa.fa-sign-out  Logout
+        .col.m9.s12
                 .col-sm-12
-                    input(type='text').form-control#token
-                    | <br><strong>Expiration :</strong> 
-                    span#expiration-date
+                    .well
+                        | <strong>ID :</strong> !{user._id} <br>
+                        | <strong>e-Mail :</strong> !{user.local.email} <br>
+                        //| <strong>password :</strong> !{user.local.password} <br>
+                        <br>
+                                        
+                    #token-well.hiddendiv
+                        h3
+                            .fa.fa-key  Token
+                        .col-sm-12
+                            input(type='text').form-control#token
+                            | <br><strong>Expiration :</strong> 
+                            span#expiration-date
                     
 block script
     script.

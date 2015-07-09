@@ -4,20 +4,22 @@ var router = express.Router();
 var doc = require("../config/doc");
 
 router.get('/', isLoggedIn, function(req, res) {
-	doc.getList(function(list) {
+	doc.getList(req.user._id, function(list) {
 		res.render('editor', {
-			list: list
+			list: list,
+			user: req.user.local.name
 		});
 	});
 })
 
 router.get('/:id', isLoggedIn, function(req, res) {
-	doc.get(req.params.id, function(err, document) {
+	doc.get(req.params.id, req.user._id, function(err, document) {
 		if (!err)
-			doc.getList(function(list) {
+			doc.getList(req.user._id, function(list) {
 				res.render('editor', {
 					document: document,
-					list: list
+					list: list,
+					user: req.user.local.name
 				});
 			});
 		else res.json({
