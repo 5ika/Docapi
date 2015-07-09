@@ -1,4 +1,10 @@
 var toast = Materialize.toast;
+var large = false;
+
+$(document).ready(function() {
+    $('.modal-trigger').leanModal();
+    $('.link-' + id).addClass('active');
+});
 
 function toMarkdown() {
     var titre = "#" + $('#title').val() + "\n";
@@ -10,12 +16,15 @@ function send() {
         title: $('#title').val(),
         content: $('#content').val(),
     };
-    if (id != 0) document._id = id;
+    if (id != 0) {
+        document._id = id;
+        $('.link-' + id).text(document.title);
+    }
     $.post("/api", document, function(data) {
         if (data) {
             id = data.id;
             toast(data.message, 2000);
-            if (data.redirectToEdit) window.location.href = id;
+            if (data.redirectToEdit) window.location.href = '/' + id;
         } else toast("Serveur inatteignable", 2000);
     });
 };
@@ -26,7 +35,21 @@ function del() {
             url: "/api/" + id,
             type: "DELETE",
             success: function(data) {
-                toast(data.message, 2000);
+                window.location.href = '/'
             }
         });
+    else toast("Document non sauvé", 2000);
 };
+
+function toogleLarge() {
+    if (large) {
+        $('#editor').addClass('m6').removeClass('m12');
+        $('#view').addClass('m6').removeClass('m12');
+        $('#large-btn').text('Large');
+    } else {
+        $('#editor').addClass('m12').removeClass('m6');
+        $('#view').addClass('m12').removeClass('m6');
+        $('#large-btn').text('Compact');
+    }
+    large = !large;
+}

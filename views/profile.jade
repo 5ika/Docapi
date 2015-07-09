@@ -17,7 +17,7 @@ block content
                 <br>
             button.btn.btn-primary.btn-block.btn-lg#getToken Get a token
                 
-            .well.hidden#token-well
+            .well.hiddendiv#token-well
                 h3
                     .fa.fa-key  Token
                 .col-sm-12
@@ -29,7 +29,6 @@ block script
     script.
         $('#getToken').click(function(){
             var token = $.getJSON('/user/!{user._id}/token', function(tokenString){
-                console.log(tokenString);
                 if(tokenString.hasOwnProperty('token') && tokenString.hasOwnProperty('expire')) {
                     var exp = new Date(tokenString.expire);
                     
@@ -39,7 +38,7 @@ block script
                         exp.getDate() + "/" + (exp.getMonth() + 1) + "/" + exp.getFullYear() + " "+
                         exp.getHours() + ":" + exp.getMinutes()
                         );
-                    $("#token-well").removeClass('hidden');
+                    $("#token-well").removeClass('hiddendiv');
                 };
             })
         });

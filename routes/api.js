@@ -34,11 +34,18 @@ router.post('/', function(req, res) {
     }
 });
 
-//Get document
+// Get document
 router.get('/:id', function(req, res) {
     doc.get(req.params.id, function(err, document) {
         if (err) res.json(err);
         else res.json(document);
+    });
+});
+
+// Get documents list
+router.get('/list/all', function(req, res) {
+    doc.getList(function(data) {
+        res.json(data);
     });
 });
 
