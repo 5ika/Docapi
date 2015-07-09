@@ -1,0 +1,13 @@
+{
+  "name": "traitement",
+  "version": "0.0.1",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components"
+  ],
+  "dependencies": {
+    "materialize": "~0.97.0",
+    "marked": "~0.3.3"
+  }
+}

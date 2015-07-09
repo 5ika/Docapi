@@ -1,0 +1,18 @@
+extends layout
+
+block content
+    .well
+        h1
+            span.fa.fa-sign-in  Login
+        if(message != '')
+            .alert.alert-danger !{message}
+        form(action='/user/login' method='post')
+            div.form-group
+                label Email
+                input(type='text' name='email').form-control
+            div.form-group
+                label Password
+                input(type='password' name='password').form-control
+            button(type='submit').btn.btn-primary.btn-lg.btn-block Login
+            a(href='/user/signup').btn.btn-info.btn-lg.btn-block Sign-up
+    

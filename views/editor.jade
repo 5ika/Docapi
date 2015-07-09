@@ -1,0 +1,33 @@
+extends layout
+
+block content
+    .row
+        form.col.s6
+            .row
+                .input-field.col.s12
+                    if(title)
+                        input#title(type="text" value='#{title}').validate
+                    else
+                        input#title(type="text").validate
+                    label(for='title') Titre                    
+            .row
+                .input-field.col.s12
+                    if(content)
+                        textarea#content.materialize-textarea #{content}
+                    else 
+                        textarea#content.materialize-textarea
+                    label(for='content') Contenu
+            .row
+                a(onclick="toMarkdown()").btn.btn-flat.waves-effect.waves-light Convertir
+                a(onclick="send()").btn.btn-flat.waves-effect.waves-light Sauver
+                a(onclick="del()").btn.btn-flat.waves-effect.waves-light Supprimer
+
+        p#view.col.s6
+                    
+block script
+    script(src="/js/editor.js")
+    script
+        if(_id)
+            | var id = "#{_id}";
+        else
+            | var id = 0;
