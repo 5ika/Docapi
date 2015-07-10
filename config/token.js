@@ -27,22 +27,19 @@ selection.isValidToken = function(req, res, next) {
 }
 
 // Indique si un token est valide ou non
-isValid = function(token, setUser) {
+selection.isValid = function(token, setUser) {
 	try {
 		var decodedToken = jwt.decode(token, secret);
 		if (decodedToken.exp >= Date.now()) {
 			User.findOne({
 				_id: decodedToken.iss
 			}, function(err, user) {
-				if (err) console.log("ALERT : No user associated with the token");
-				else setUser(user);
+				if (!err) setUser(user);
 			});
-			return true;
 		}
 	} catch (err) {
-		return false;
+		setUser(null);
 	}
-	return false;
 };
 
 // Calcul et retourne un token pour un utilisateur donné

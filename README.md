@@ -15,7 +15,6 @@ npm start
 # Fonctionnalités futures
 
 - Chiffrement asymétrique des documents
-- Authentification de l'API avec token
 - Catégories de document
 
 # Bugs connus
