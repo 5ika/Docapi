@@ -8,14 +8,16 @@ html(lang='en')
       link(rel='stylesheet', href='/css/style.css')
       link(rel='stylesheet', href='/materialize/dist/css/materialize.min.css')
       link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css')
-      link(href='http://fonts.googleapis.com/css?family=Didact+Gothic' rel='stylesheet' type='text/css')
+      link(href='https://fonts.googleapis.com/css?family=Didact+Gothic' rel='stylesheet' type='text/css')
       script(src='/jquery/dist/jquery.js')
       script(src='/materialize/dist/js/materialize.min.js')
       script(src='/marked/marked.min.js')
     block js
         if ENV_DEVELOPMENT
-            script(src='http://localhost:35729/livereload.js')
+            script(src='https://localhost:35729/livereload.js')
   body
+    .credentials
+      a(href='https://github.com/5ika/Docapi.git') docapi v0.1
     block content
     block modals
     block script

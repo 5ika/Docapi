@@ -3,6 +3,11 @@ var appInfo = require('../package.json')
 var router = express.Router();
 var doc = require("../config/doc");
 
+//TEST
+router.get('/crypto',function(req,res){
+	res.render('crypto');
+});
+
 router.get('/', isLoggedIn, function(req, res) {
 	doc.getList(req.user._id, function(list) {
 		res.render('editor', {
