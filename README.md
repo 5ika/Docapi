@@ -1,9 +1,17 @@
-Docapi est une api + interface de gestion de document en markdown.
-Elle se veut simpliste et claire.
+Docapi est une webapp permettant de gérer des documents [Markdown](https://fr.wikipedia.org/wiki/Markdown) de manière simple et intuitive.
+Les documents sont enregistrés sur un serveur et sont récupérables depuis n'importe où, avec un PC, un smartphone ou une tablette.
 
-# Installation
+L'application est encore en phase de développement. Tout commentaire et idée d'amélioration sont les bienvenues.
 
-Il est nécessaire d'avoir installé MongoDB au préalable (localhost par défaut).
+# API
+Docapi propose une API Rest permettant de gérer ses documents sans passer par l'interface web.
+Pour l'utiliser, il est nécessaire d'obtenir un token, récupérable sur la page du profile utilisateur.
+
+Pour le moment, l'API n'est pas encore documentée. Mais elle le sera prochainement :-).
+
+# Self-hosting
+Vous pouvez installer Docapi sur votre propre serveur pour héberger les documents chez vous.
+Il est nécessaire d'avoir installé NodeJS et MongoDB au préalable.
 
 ```{.bash}
 git clone git@github.com:5ika/Docapi.git
@@ -14,7 +22,5 @@ npm start
 
 # Fonctionnalités futures
 
-- Chiffrement asymétrique des documents
 - Catégories de document
-
-# Bugs connus
+- Chiffrement des documents sur le serveur

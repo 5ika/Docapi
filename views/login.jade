@@ -2,8 +2,7 @@ extends layout
 
 block content
     .container
-        h1
-            span.fa.fa-sign-in  Login
+        h1 Login
         if(message != '')
             .alert.alert-danger !{message}
         form(action='/user/login' method='post')
@@ -13,6 +12,6 @@ block content
             div.form-group
                 label Password
                 input(type='password' name='password').form-control
-            button(type='submit').btn.btn-primary.btn-lg Login
-            a(href='/user/signup').btn.btn-info.btn-lg Sign-up
+            button(type='submit').btn.btn-primary.btn-lg.btn-flat Login
+            a(href='/user/signup').btn.btn-info.btn-lg.btn-flat Sign-up
     

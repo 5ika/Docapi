@@ -1,12 +1,10 @@
 extends layout
 
 block content
-    .header
-        h4 docapi
     .user
         a.btn.btn-flat(href='/user/profile')
             if(user)
-                | #{user}
+                |  #{user}
             else
                 | No user
     .row
@@ -24,9 +22,9 @@ block content
                 .row
                     .input-field.col.s12
                         if(document)
-                            input#title(type="text" value='#{document.title}').validate
+                            input#title(type="text" value='#{document.title}' autocomplete="off")
                         else
-                            input#title(type="text").validate
+                            input#title(type="text")
                         label(for='title') Titre                    
                 .row
                     .input-field.col.s12

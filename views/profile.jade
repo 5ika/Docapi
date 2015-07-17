@@ -2,15 +2,18 @@ extends layout
 
 block content
     .container.row
+        .user
+            a(href='/').btn.blue
+                .fa.fa-edit  Editor
         .page-header
             h1 Profil de #{user.local.name}
         .col.m3.s12
             .menu-profile
-                a(href='/').btn
-                    .fa.fa-edit  Editor
-                button.btn#getToken 
+                button.btn.btn-flat#getToken 
                     .fa.fa-key  Get a token
-                a(href='/user/logout').btn
+                a(href='https://github.com/5ika/Docapi').btn.btn-flat
+                    .fa.fa-github-alt   GitHub
+                a(href='/user/logout').btn.btn-flat
                     .fa.fa-sign-out  Logout
         .col.m9.s12
                 .col-sm-12
@@ -23,6 +26,7 @@ block content
                     #token-well.hiddendiv
                         h3
                             .fa.fa-key  Token
+                        p Ce token est nécessaire pour utiliser l'API de Docapi (Développeurs)
                         .col-sm-12
                             input(type='text').form-control#token
                             | <br><strong>Expiration :</strong> 
@@ -35,12 +39,10 @@ block script
                 if(tokenString.hasOwnProperty('token') && tokenString.hasOwnProperty('expire')) {
                     var exp = new Date(tokenString.expire);
                     
-                    $('#getToken').remove();
                     $("#token").val(tokenString.token);
                     $("#expiration-date").text(
                         exp.getDate() + "/" + (exp.getMonth() + 1) + "/" + exp.getFullYear() + " "+
-                        exp.getHours() + ":" + exp.getMinutes()
-                        );
+                        exp.getHours() + ":" + exp.getMinutes());
                     $("#token-well").removeClass('hiddendiv');
                 };
             })

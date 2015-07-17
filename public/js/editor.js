@@ -12,21 +12,24 @@ function toMarkdown() {
 };
 
 function send() {
-    var document = {
-        title: $('#title').val(),
-        content: $('#content').val(),
-    };
-    if (id != 0) {
-        document._id = id;
-        $('.link-' + id).text(document.title);
-    }
-    $.post("/api", document, function(data) {
-        if (data && !data.hasOwnProperty('error')) {
-            id = data.id;
-            toast(data.message, 2000);
-            if (data.redirectToEdit) window.location.href = '/' + id;
-        } else toast("Problème serveur. Document non sauvé.", 2000);
-    });
+    if ($('#title').val() != "") {
+        var document = {
+            title: $('#title').val(),
+            content: $('#content').val(),
+        };
+        if (id != 0) {
+            document._id = id;
+            $('.link-' + id).text(document.title);
+        }
+        $.post("/api", document, function(data) {
+            if (data && !data.hasOwnProperty('error')) {
+                id = data.id;
+                toast(data.message, 2000);
+                if (data.redirectToEdit) window.location.href = '/' +
+                    id;
+            } else toast("Problème serveur. Document non sauvé.", 2000);
+        });
+    } else toast("Pas de titre. Document non sauvé", 2000);
 };
 
 function del() {
