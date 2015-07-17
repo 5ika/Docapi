@@ -24,3 +24,4 @@ npm start
 
 - Catégories de document
 - Chiffrement des documents sur le serveur
+- Optimiser l'affichage du Mardown

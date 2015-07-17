@@ -11,8 +11,8 @@ block content
         #editor.col.m6.s12    
             .col.s12.m12
                 a(onclick="send()").btn.btn-flat.waves-effect.waves-light Sauver
-                a(onclick="del()").btn.btn-flat.waves-effect.waves-light Supprimer
                 a.waves-effect.waves-light.btn.btn-flat.modal-trigger(href='#modal-list') Liste
+                a(onclick="del()").btn.btn-flat.waves-effect.waves-light Supprimer
                 a(onclick="toMarkdown()").btn.btn-flat.waves-effect.waves-light Convertir
                 if(document)
                     a(href="/api/dl/#{document._id}.txt" target='_blank').waves-effect.waves-light.btn.btn-flat Télécharger
