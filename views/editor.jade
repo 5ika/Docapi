@@ -12,13 +12,13 @@ block content
             .col.s12.m12
                 a(onclick="send()").btn.btn-flat.waves-effect.waves-light Sauver
                 a.waves-effect.waves-light.btn.btn-flat.modal-trigger(href='#modal-list') Liste
-                a(onclick="del()").btn.btn-flat.waves-effect.waves-light Supprimer
+                a(data-target='modal-confirm').btn.btn-flat.waves-effect.waves-light.modal-trigger Supprimer
                 a(onclick="toMarkdown()").btn.btn-flat.waves-effect.waves-light Convertir
                 if(document)
                     a(href="/api/dl/#{document._id}.txt" target='_blank').waves-effect.waves-light.btn.btn-flat Télécharger
                     a(onclick="newDocument()").btn.btn-flat.waves-effect.waves-light Nouveau
                 a(onclick="toogleLarge()").btn.btn-flat.waves-effect.waves-light.hide-on-small-only#large-btn Large
-            form.col.m12.s12
+            form(onSubmit="return false;").col.m12.s12
                 .row
                     .input-field.col.s12
                         if(document)
@@ -53,3 +53,10 @@ block modals
                         a.collection-item(href='/#{doc._id}' class='link-#{doc._id}') #{doc.title}
             else
                 | Pas de document
+                
+    #modal-confirm.modal
+        .modal-content
+            h5 Êtes-vous certain de vouloir supprimer ?
+        .modal-footer
+            a(onclick="del()").btn.btn-flat.btn-lg.waves-effect.modal-action.modal-close Oui
+            a.btn.btn-flat.btn-lg.waves-effect.modal-action.modal-close Non

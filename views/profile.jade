@@ -4,29 +4,32 @@ block content
     .container.row
         .user
             a(href='/').btn.blue
-                .fa.fa-edit  Editor
+                .fa.fa-edit
+                |  Editor
         .page-header
             h1 Profil de #{user.local.name}
         .col.m3.s12
             .menu-profile
                 button.btn.btn-flat#getToken 
-                    .fa.fa-key  Get a token
+                    .fa.fa-key
+                    |  Obtenir un jeton
                 a(href='https://github.com/5ika/Docapi').btn.btn-flat
-                    .fa.fa-github-alt   GitHub
+                    .fa.fa-github-alt
+                    |  GitHub
                 a(href='/user/logout').btn.btn-flat
-                    .fa.fa-sign-out  Logout
+                    .fa.fa-sign-out
+                    |  Déconnexion
         .col.m9.s12
                 .col-sm-12
-                    .well
-                        | <strong>ID :</strong> !{user._id} <br>
-                        | <strong>e-Mail :</strong> !{user.local.email} <br>
-                        //| <strong>password :</strong> !{user.local.password} <br>
-                        <br>
+                    | <strong>ID :</strong> !{user._id} <br>
+                    | <strong>e-Mail :</strong> !{user.local.email} <br>
+                    a(href='/user/delete') Supprimer le compte <br>
+                    <br>
                                         
                     #token-well.hiddendiv
                         h3
-                            .fa.fa-key  Token
-                        p Ce token est nécessaire pour utiliser l'API de Docapi (Développeurs)
+                            .fa.fa-key  Jeton
+                        p Ce jeton est nécessaire pour utiliser l'API de Docapi (Développeurs)
                         .col-sm-12
                             input(type='text').form-control#token
                             | <br><strong>Expiration :</strong> 
@@ -47,3 +50,6 @@ block script
                 };
             })
         });
+    
+    if(message != '')
+        script Materialize.toast("!{message}", 2000);

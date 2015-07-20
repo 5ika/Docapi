@@ -56,6 +56,7 @@ body{
 /* Blue-tifisation*/
 a.btn:hover, a.btn-large:hover,a.btn-flat:hover,button.btn:hover,button:focus,.collection .collection-item.active{
     background-color:#2196f3;
+    color:white;
 }
 .input-field input[type=text]:focus + label,textarea.materialize-textarea:focus:not([readonly])+label,.collection a.collection-item {
     color: #2196f3;
@@ -69,6 +70,9 @@ a.btn:hover, a.btn-large:hover,a.btn-flat:hover,button.btn:hover,button:focus,.c
 /* Markdown optimisation */
 strong{
     font-weight:bold;
+}
+ul,ol{
+    padding-left:50px;
 }
 ul li {
     list-style-type: circle;

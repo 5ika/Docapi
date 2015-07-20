@@ -4,11 +4,23 @@ var large = false;
 $(document).ready(function() {
     $('.modal-trigger').leanModal();
     $('.link-' + id).addClass('active');
+
+    window.setTimeout(function() {
+        if ($('#title').val() != "" && $('#content').val() !=
+            "")
+            send();
+    }, 30000);
+
 });
 
 function toMarkdown() {
     var titre = "#" + $('#title').val() + "\n";
-    $("#view").html(marked(titre + $("#content").val()));
+    var content = titre + $("#content").val();
+    //content = content.replace(/(<([^>]+)>)/ig, "");
+    content = content.replace(/(<script>)/ig, "[Javascript]\n");
+    content = content.replace(/(<\/script>)/ig, "\n[/Javascript]");
+    var md = marked(content);
+    $("#view").html(md);
 };
 
 function send() {
@@ -27,7 +39,9 @@ function send() {
                 toast(data.message, 2000);
                 if (data.redirectToEdit) window.location.href = '/' +
                     id;
-            } else toast("Problème serveur. Document non sauvé.", 2000);
+                toMarkdown();
+            } else toast("Problème serveur. Document non sauvé.",
+                2000);
         });
     } else toast("Pas de titre. Document non sauvé", 2000);
 };
