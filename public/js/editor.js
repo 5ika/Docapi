@@ -14,7 +14,7 @@ $(document).ready(function() {
 });
 
 function toMarkdown() {
-    var titre = "#" + $('#title').val() + "\n";
+    var titre = "# " + $('#title').val() + "\n";
     var content = titre + $("#content").val();
     //content = content.replace(/(<([^>]+)>)/ig, "");
     content = content.replace(/(<script>)/ig, "[Javascript]\n");
