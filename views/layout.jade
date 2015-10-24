@@ -12,15 +12,14 @@ html(lang='en')
       script(src='/jquery/dist/jquery.js')
       script(src='/materialize/dist/js/materialize.min.js')
       script(src='/marked/marked.min.js')
+
     block js
-        if ENV_DEVELOPMENT
-            script(src='https://localhost:35729/livereload.js')
   body
     .header
         h4 docapi 
             span.blue-text (beta)
     .credentials
-      a(href='https://github.com/5ika/Docapi.git') docapi v0.2
+      a(href='https://github.com/5ika/Docapi.git') docapi v0.3
     block content
     block modals
     block script

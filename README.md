@@ -25,3 +25,6 @@ npm start
 - Catégories de document
 - Chiffrement des documents sur le serveur
 - Télécharger un document en docx et/ou pdf
+- A la suppression d'un utilisateur :
+    - Supprimer ses documents
+    - Demander une confirmation (idem que pour un document)

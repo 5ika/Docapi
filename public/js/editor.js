@@ -1,16 +1,18 @@
 var toast = Materialize.toast;
-var large = false;
+var preview = true;
 
 $(document).ready(function() {
     $('.modal-trigger').leanModal();
     $('.link-' + id).addClass('active');
+    $(".editable").on("input", toMarkdown);
+    toMarkdown();
 
-    window.setTimeout(function() {
+    // Sauvegarde automatique toutes les minutes
+    window.setInterval(function() {
         if ($('#title').val() != "" && $('#content').val() !=
             "")
             send();
-    }, 30000);
-
+    }, 60000);
 });
 
 function toMarkdown() {
@@ -24,6 +26,7 @@ function toMarkdown() {
 };
 
 function send() {
+    console.log("Sauvegarde");
     if ($('#title').val() != "") {
         var document = {
             title: $('#title').val(),
@@ -37,10 +40,11 @@ function send() {
             if (data && !data.hasOwnProperty('error')) {
                 id = data.id;
                 toast(data.message, 2000);
-                if (data.redirectToEdit) window.location.href = '/' +
-                    id;
-                toMarkdown();
-            } else toast("Problème serveur. Document non sauvé.",
+                $("#last-save").text("Dernière sauvegarde : " + Date());
+                if (data.redirectToEdit) window.location.href =
+                    '/' + id;
+            } else toast(
+                "Problème serveur. Document non sauvé.",
                 2000);
         });
     } else toast("Pas de titre. Document non sauvé", 2000);
@@ -62,15 +66,13 @@ function newDocument() {
     window.location.href = '/'
 }
 
-function toogleLarge() {
-    if (large) {
-        $('#editor').addClass('m6').removeClass('m12');
-        $('#view').addClass('m6').removeClass('m12');
-        $('#large-btn').text('Large');
-    } else {
+function togglePreview() {
+    if (preview) {
         $('#editor').addClass('m12').removeClass('m6');
-        $('#view').addClass('m12').removeClass('m6');
-        $('#large-btn').text('Compact');
+        $('#view').hide();
+    } else {
+        $('#editor').addClass('m6').removeClass('m12');
+        $('#view').show();
     }
-    large = !large;
+    preview = !preview;
 }

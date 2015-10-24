@@ -53,6 +53,10 @@ body{
     border:1px solid #2196f3;
 }
 
+#last-save{
+    color:grey;
+}
+
 /* Blue-tifisation*/
 a.btn:hover, a.btn-large:hover,a.btn-flat:hover,button.btn:hover,button:focus,.collection .collection-item.active{
     background-color:#2196f3;
@@ -91,6 +95,13 @@ input::-moz-placeholder, textarea::-moz-placeholder {
 }
 input:-ms-input-placeholder, textarea:-ms-input-placeholder {
     color:    #424242;
+}
+
+input[type="text"],textarea.materialize-textarea,.input-field input[type="text"]:focus, textarea.materialize-textarea:focus:not([readonly]){
+    border:none;
+    background-color: #F5F5F5;
+    box-shadow: none;
+    padding:10px;
 }
 
 @media only screen and (max-width : 992px) {

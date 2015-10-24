@@ -13,26 +13,24 @@ block content
                 a(onclick="send()").btn.btn-flat.waves-effect.waves-light Sauver
                 a.waves-effect.waves-light.btn.btn-flat.modal-trigger(href='#modal-list') Liste
                 a(data-target='modal-confirm').btn.btn-flat.waves-effect.waves-light.modal-trigger Supprimer
-                a(onclick="toMarkdown()").btn.btn-flat.waves-effect.waves-light Convertir
                 if(document)
                     a(href="/api/dl/#{document._id}.txt" target='_blank').waves-effect.waves-light.btn.btn-flat Télécharger
                     a(onclick="newDocument()").btn.btn-flat.waves-effect.waves-light Nouveau
-                a(onclick="toogleLarge()").btn.btn-flat.waves-effect.waves-light.hide-on-small-only#large-btn Large
+                a(onclick="togglePreview()").btn.btn-flat.waves-effect.waves-light#preview-btn Preview
+                #last-save
             form(onSubmit="return false;").col.m12.s12
                 .row
                     .input-field.col.s12
                         if(document)
-                            input#title(type="text" value='#{document.title}' autocomplete="off")
+                            input#title.editable(type="text" value='#{document.title}' autocomplete="off")
                         else
-                            input#title(type="text")
-                        label(for='title') Titre                    
+                            input#title.editable(type="text" placeholder="Titre du document")
                 .row
                     .input-field.col.s12
                         if(document)
-                            textarea#content.materialize-textarea #{document.content}
+                            textarea(placeholder='Contenu du document...')#content.materialize-textarea.editable #{document.content}
                         else 
-                            textarea#content.materialize-textarea
-                        label(for='content') Contenu
+                            textarea(placeholder='Contenu du document...')#content.materialize-textarea.editable Je suis un contenu
         p#view.col.m6.s12
                     
 block script
