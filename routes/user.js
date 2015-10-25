@@ -3,6 +3,7 @@ var router = express.Router();
 var passport = require('passport');
 var tokenAuth = require('../config/token');
 var User = require('../config/user-model');
+var doc = require("../config/doc");
 
 router.get('/', function(req, res) {
     res.redirect('/user/profile');
@@ -109,11 +110,16 @@ function isLoggedIn(req, res, next) {
 
 // Remove an user in the DB
 function deleteUser(req, callback) {
-    User.remove({
-        _id: req.user._id
-    }, function(err) {
-        callback(err);
-    });
+    var userID = req.user._id;
+    console.log("Suppression des documents pour l'utilisateur " + userID);
+    doc.delUser(userID, function() {
+        console.log("Suppression de l'utilisateur " + userID);
+        User.remove({
+            _id: userID
+        }, function(err) {
+            callback(err);
+        });
+    })
 };
 
 module.exports = router;

@@ -11,7 +11,8 @@ Pour le moment, l'API n'est pas encore documentée. Mais elle le sera prochainem
 
 # Self-hosting
 Vous pouvez installer Docapi sur votre propre serveur pour héberger les documents chez vous.
-Il est nécessaire d'avoir installé NodeJS et MongoDB au préalable.
+Il est nécessaire d'avoir installé NodeJS, MongoDB et [Pandoc](http://pandoc.org/) au préalable.
+Le programme pandoc est utilisé pour convertir le markdown en fichier PDF.
 
 ```{.bash}
 git clone git@github.com:5ika/Docapi.git
@@ -24,7 +25,6 @@ npm start
 
 - Catégories de document
 - Chiffrement des documents sur le serveur
-- Télécharger un document en docx et/ou pdf
 - A la suppression d'un utilisateur :
     - Supprimer ses documents
     - Demander une confirmation (idem que pour un document)

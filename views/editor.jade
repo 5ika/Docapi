@@ -12,13 +12,23 @@ block content
     .row
         #editor.col.m6.s12    
             .col.s12.m12
-                a(onclick="send()").btn.btn-flat.waves-effect.waves-light Sauver
-                a.waves-effect.waves-light.btn.btn-flat.modal-trigger(href='#modal-list') Liste
-                a(data-target='modal-confirm').btn.btn-flat.waves-effect.waves-light.modal-trigger Supprimer
+                a(href='#modal-list' data-tooltip="Mes documents" data-position="top").waves-effect.waves-light.btn.btn-flat.modal-trigger.tooltipped
+                    .fa.fa-list
+                a(onclick="send()" data-tooltip="Enregistrer" data-position="top").btn.btn-flat.waves-effect.waves-light.tooltipped
+                    .fa.fa-save
+                a(data-target='modal-confirm' data-tooltip="Supprimer" data-position="top").btn.btn-flat.waves-effect.waves-light.modal-trigger.tooltipped
+                    .fa.fa-trash-o
                 if(document)
-                    a(href="/api/dl/#{document._id}.txt" target='_blank').waves-effect.waves-light.btn.btn-flat Télécharger
-                    a(onclick="newDocument()").btn.btn-flat.waves-effect.waves-light Nouveau
-                a(onclick="togglePreview()").btn.btn-flat.waves-effect.waves-light#preview-btn Preview
+                    a(href="/api/dl/#{document._id}.md" target='_blank' data-tooltip="Télécharger en MD" data-position="top").waves-effect.waves-light.btn.btn-flat.tooltipped
+                        .fa.fa-download
+                    a(href="/api/dl/#{document._id}.pdf" target='_blank' data-tooltip="Télécharger en PDF" data-position="top").waves-effect.waves-light.btn.btn-flat.tooltipped
+                        .fa.fa-file-pdf-o
+                    a(onclick="newDocument()" data-tooltip="Nouveau" data-position="top").btn.btn-flat.waves-effect.waves-light.tooltipped
+                        .fa.fa-file-text-o
+                    a(onclick="parameters()" data-tooltip="Paramètres" data-position="top").btn.btn-flat.waves-effect.waves-light#preview-btn.tooltipped
+                        .fa.fa-cog
+                a(onclick="togglePreview()" data-tooltip="Mode Preview" data-position="top").btn.btn-flat.waves-effect.waves-light#preview-btn.tooltipped
+                    .fa.fa-eye-slash
                 #last-save
             form(onSubmit="return false;").col.m12.s12
                 .row
@@ -60,3 +70,32 @@ block modals
         .modal-footer
             a(onclick="del()").btn.btn-flat.btn-lg.waves-effect.modal-action.modal-close Oui
             a.btn.btn-flat.btn-lg.waves-effect.modal-action.modal-close Non
+
+    #modal-parameters.modal
+        .modal-content
+            h5 Paramètres
+            p Vous pouvez modifier ici les paramètres de conversion pour le format PDF.
+            .row
+                .input-field.col.s12.m6
+                    if(document)
+                        input#username(type='text' value="#{document.username}")
+                    else 
+                        input#username(type='text')
+                    label(for="username") Nom Prénom
+                .input-field.col.s12.m6
+                    if(document)
+                        input#context(type='text' value="#{document.context}")
+                    else
+                        input#context(type='text')
+                    label(for="context") Contexte
+                .switch.col.s12.m12
+                    span Table des matières: 
+                    label  Off 
+                        input#toc(type='checkbox')
+                        span.lever
+                        |On
+                    if(document)
+                        script.
+                            $("#toc").prop('checked',#{document.toc});
+        .modal-footer
+            a(href="#").modal-action.modal-close.btn-flat Fermer

@@ -1,14 +1,19 @@
 var Document = require('../models/document');
+var shell = require('shelljs');
+var fs = require('fs');
 
 var doc = new Object();
 
 // Ajouter un document
-doc.add = function(titre, contenu, userID, callback) {
+doc.add = function(document, userID, callback) {
     var newDoc = new Document({
         date: Date.now(),
-        title: titre,
-        content: contenu,
-        user: userID
+        title: document.title,
+        content: document.content,
+        user: userID,
+        toc: document.toc,
+        context: document.context,
+        username: document.username
     });
     newDoc.save(function(err) {
         if (err) {
@@ -25,14 +30,17 @@ doc.add = function(titre, contenu, userID, callback) {
 }
 
 // Modifier un document
-doc.update = function(id, titre, contenu, userID, callback) {
+doc.update = function(id, document, userID, callback) {
     Document.findOneAndUpdate({
         _id: id,
         user: userID
     }, {
         date: Date.now(),
-        title: titre,
-        content: contenu
+        title: document.title,
+        content: document.content,
+        toc: document.toc,
+        context: document.context,
+        username: document.username
     }, function(err) {
         if (err) callback({
             message: err
@@ -49,6 +57,40 @@ doc.get = function(id, userID, callback) {
     }, function(err, document) {
         callback(null, document);
     })
+}
+
+// Convertir un document en PDF pour récupération
+doc.convert = function(id, userID, callback) {
+    Document.findOne({
+        _id: id,
+        user: userID
+    }, function(err, document) {
+        var now = new Date();
+        var date = now.getDate() + "/" + (now.getMonth() + 1) +
+            "/" + now.getFullYear();
+        var header =
+            "---\ntitle: '" + document.title +
+            "'\nauthor: '" + document.username +
+            "'\ndate: '" + date;
+        if (document.context)
+            header += "'\nHautGauche: '" + document.context;
+        if (document.username)
+            header += "'\nHautDroit: '" + document.username;
+        if (document.toc)
+            header += "'\ntoc: 'true";
+        header += "'\ndocumentclass: 'report'\n...";
+        var contenu = header + "\n" + document.content;
+        fs.writeFile("tmp/" + id + ".md", contenu, function(
+            err) {
+            if (!err) {
+                shell.exec("pandoc tmp/" + id +
+                    ".md -o tmp/" + id +
+                    ".pdf --template template.latex -N --smart"
+                );
+            }
+            callback(err, "tmp/" + id + ".pdf");
+        })
+    });
 }
 
 // Récupérer la liste des documents
@@ -77,8 +119,21 @@ doc.del = function(id, userID, callback) {
         _id: id,
         user: userID
     }, function(err, document) {
-        if (!err) callback("Le document a bien été supprimé");
+        if (!err) callback(
+            "Le document a bien été supprimé");
         else callback('Pas de document avec cet id');
+    })
+}
+
+// Supprimer tous les documents d'un utilisateur
+doc.delUser = function(userID, callback) {
+    Document.find({
+        user: userID
+    }, function(err, list) {
+        list.forEach(function(document) {
+            document.remove();
+        });
+        callback();
     })
 }
 

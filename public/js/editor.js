@@ -17,7 +17,8 @@ $(document).ready(function() {
 });
 
 function toMarkdown() {
-    var titre = "# " + $('#title').val() + "\n";
+    var titre = "";
+    if ($('#title').val() != "") titre = "# " + $('#title').val() + "\n";
     var content = titre + $("#content").val();
     //content = content.replace(/(<([^>]+)>)/ig, "");
     content = content.replace(/(<script>)/ig, "[Javascript]\n");
@@ -30,21 +31,28 @@ function send() {
     if ($('#content').val() != lastContent)
         if ($('#title').val() != "") {
             console.log("Sauvegarde");
-            var document = {
-                title: $('#title').val(),
-                content: $('#content').val(),
+            var parameters = {
+                document: {
+                    title: $('#title').val(),
+                    content: $('#content').val(),
+                    username: $('#username').val(),
+                    context: $('#context').val(),
+                    toc: $('#toc').is(':checked') || false
+                }
             };
             if (id != 0) {
-                document._id = id;
-                $('.link-' + id).text(document.title);
+                parameters._id = id;
+                $('.link-' + id).text(parameters.document.title);
             }
-            $.post("/api", document, function(data) {
+            $.post("/api", parameters, function(data) {
                 if (data && !data.hasOwnProperty('error')) {
                     id = data.id;
                     toast(data.message, 2000);
-                    $("#last-save").text("Dernière sauvegarde : " +
-                        Date());
-                    lastContent = document.content;
+                    var now = new Date(),
+                        date = now.getHours() + ":" + now.getMinutes();
+                    $("#last-save").text("Dernière sauvegarde à " +
+                        date);
+                    lastContent = parameters.document.content;
                     if (data.redirectToEdit) window.location.href =
                         '/' + id;
                 } else toast(
@@ -74,11 +82,20 @@ function togglePreview() {
     if (preview) {
         $('#editor').addClass('m12').removeClass('m6');
         $('#view').hide();
+        $(".fa-eye-slash").removeClass('fa-eye-slash').addClass('fa-eye');
+
     } else {
         $('#editor').addClass('m6').removeClass('m12');
         $('#view').show();
+        $(".fa-eye").removeClass('fa-eye').addClass('fa-eye-slash');
     }
     preview = !preview;
+}
+
+function parameters() {
+    if ($("#modal-parameters").css('display') == "none")
+        $('#modal-parameters').openModal();
+    else $('#modal-parameters').closeModal();
 }
 
 //Gestion des touches claviers spéciales
@@ -96,7 +113,6 @@ $("textarea").keydown(function(e) {
     }
 });
 $(document).keydown(function(e) {
-    console.log(e.keyCode);
     if (e.ctrlKey) {
         switch (e.keyCode) {
             //CTRL+S : Sauvegarde manuelle

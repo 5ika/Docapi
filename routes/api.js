@@ -16,8 +16,7 @@ router.get('/', function(req, res) {
 router.post('/', isLoggedIn, function(req, res) {
     if (req.body._id) {
         console.log("UPDATE " + req.body._id)
-        doc.update(req.body._id, req.body.title, req.body.content, req.user
-            ._id,
+        doc.update(req.body._id, req.body.document, req.user._id,
             function(ret, id) {
                 res.json({
                     message: ret,
@@ -25,7 +24,7 @@ router.post('/', isLoggedIn, function(req, res) {
                 });
             });
     } else {
-        doc.add(req.body.title, req.body.content, req.user._id,
+        doc.add(req.body.document, req.user._id,
             function(ret, id) {
                 console.log("ADD " + id);
                 res.json({
@@ -63,15 +62,26 @@ router.delete('/:id', isLoggedIn, function(req, res) {
 })
 
 // Download document
-router.get('/dl/:id.txt', isLoggedIn, function(req, res) {
+router.get('/dl/:id.md', isLoggedIn, function(req, res) {
     doc.get(req.params.id, req.user._id, function(err, document) {
         if (!err) {
             res.header('Content-type', 'text/plain');
             res.header('Content-Disposition',
                 'attachment; filename="' + document.title +
-                '.txt"');
+                '.md"');
             res.send("# " + document.title + "\n\n" + document.content);
         } else res.json(err);
+    });
+});
+
+// Download pdf
+router.get('/dl/:id.pdf', isLoggedIn, function(req, res) {
+    doc.convert(req.params.id, req.user._id, function(err, path) {
+        if (!err) {
+            res.download(path, "Docapi-" + req.params.id +
+                ".pdf");
+        } else res.json(err);
+
     });
 });
 

@@ -17,12 +17,20 @@ var routes = require('./routes/index');
 var user = require('./routes/user');
 var api = require('./routes/api');
 var config = require('./config');
+var shell = require('shelljs');
 
 var app = express();
 
 ///////////
 // Setup //
 ///////////
+
+//Test if pandoc is installed
+if (!shell.which('pandoc')) {
+	console.log(
+		'[PANDOC] Pandoc n\'est pas installé. Vous ne pourrez pas utiliser la conversion en PDF.'
+	);
+} else console.log("Pandoc est installé");
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
