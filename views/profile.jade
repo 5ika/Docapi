@@ -3,9 +3,10 @@ extends layout
 block content
     .container.row
         .user
-            a(href='/').btn.blue
-                .fa.fa-edit
-                |  Editor
+            a(href='/')
+                .chip
+                    .fa.fa-edit
+                    |  Editeur
         .page-header
             h1 Profil de #{user.local.name}
         .col.m3.s12

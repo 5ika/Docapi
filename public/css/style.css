@@ -1,5 +1,7 @@
 body{
     font-family: 'Didact Gothic', sans-serif;
+    background-color: #F5F5F5;
+    color:#37474F;
 }
 .header{
     width:100%;
@@ -19,11 +21,9 @@ body{
 }
 .user{
     position:fixed;
-    bottom:2px;
-    right:2px;
-    font-size:12px;
+    bottom:10px;
+    right:10px;
     z-index:3;
-    background-color:white;
 }
 .credentials{
   position:fixed;
@@ -35,7 +35,12 @@ body{
     margin:4px;
 }
 #editor a.btn{
-    padding: 3px 15px;
+    padding: 0px 15px;
+    color:#f44336;
+}
+#editor a.btn:hover{
+    background-color: #f44336;
+    color:#FAFEFE;
 }
 .menu-profile > .btn{
     width:100%;
@@ -48,11 +53,6 @@ body{
     margin-bottom: 20px;
     border-radius: 4px;
 }
-
-.user > .btn,.menu-profile > .btn{
-    border:1px solid #2196f3;
-}
-
 #last-save{
     color:grey;
 }
@@ -68,18 +68,6 @@ a.btn:hover, a.btn-large:hover,a.btn-flat:hover,button.btn:hover,button:focus,.c
 .input-field input[type=text]:focus,textarea.materialize-textarea:focus:not([readonly]) {
     border-bottom: 1px solid #2196f3;
     box-shadow: 0 1px 0 0 #2196f3;
-}
-/* --- */
-
-/* Markdown optimisation */
-strong{
-    font-weight:bold;
-}
-ul,ol{
-    padding-left:50px;
-}
-ul li {
-    list-style-type: circle;
 }
 
 /**/
@@ -97,9 +85,9 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
     color:    #424242;
 }
 
-input[type="text"],textarea.materialize-textarea,.input-field input[type="text"]:focus, textarea.materialize-textarea:focus:not([readonly]){
+#editor input[type="text"],#editor textarea.materialize-textarea,#editor .input-field input[type="text"]:focus, #editor textarea.materialize-textarea:focus:not([readonly]){
     border:none;
-    background-color: #F5F5F5;
+    background-color: #EEEEEE;
     box-shadow: none;
     padding:10px;
 }
@@ -111,7 +99,8 @@ input[type="text"],textarea.materialize-textarea,.input-field input[type="text"]
         font-size:12px;
         padding:0;
     }
-    .user > .btn{
+}
 
-    }
+.docapi{
+    color:#f44336;
 }

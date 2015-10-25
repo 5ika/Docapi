@@ -1,0 +1,44 @@
+#view h1:first-child{
+    color:#ef5350;
+}
+
+#view h1,#view h2,#view h3,#view h4,#view h5,#view h6{
+    font-weight: bold;
+}
+
+#view h2{
+    font-size: 2.5rem;
+}
+#view h3{
+    font-size: 2rem;
+}
+#view h4{
+    font-size: 1.5rem;
+}
+#view h5{
+    font-size: 1.2rem;
+}
+
+/* Numérotation des titres */
+body {counter-reset: h2}
+#view h2 {counter-reset: h3}
+#view h3 {counter-reset: h4}
+#view h4 {counter-reset: h5}
+#view h5 {counter-reset: h6}
+
+#view h2:before {counter-increment: h2; content: counter(h2) ". "}
+#view h3:before {counter-increment: h3; content: counter(h2) "." counter(h3) ". "}
+#view h4:before {counter-increment: h4; content: counter(h2) "." counter(h3) "." counter(h4) ". "}
+#view h5:before {counter-increment: h5; content: counter(h2) "." counter(h3) "." counter(h4) "." counter(h5) ". "}
+#view h6:before {counter-increment: h6; content: counter(h2) "." counter(h3) "." counter(h4) "." counter(h5) "." counter(h6) ". "}
+
+/* Markdown optimisation */
+strong{
+    font-weight:bold;
+}
+ul,ol{
+    padding-left:50px;
+}
+ul li {
+    list-style-type: circle;
+}

@@ -2,11 +2,13 @@ extends layout
 
 block content
     .user
-        a.btn.btn-flat(href='/user/profile')
-            if(user)
-                |  #{user}
-            else
-                | No user
+        a(href='/user/profile')
+            .chip
+                .fa.fa-user
+                if(user)
+                    |  #{user}
+                else
+                    | No user
     .row
         #editor.col.m6.s12    
             .col.s12.m12
@@ -30,8 +32,8 @@ block content
                         if(document)
                             textarea(placeholder='Contenu du document...')#content.materialize-textarea.editable #{document.content}
                         else 
-                            textarea(placeholder='Contenu du document...')#content.materialize-textarea.editable Je suis un contenu
-        p#view.col.m6.s12
+                            textarea(placeholder='Contenu du document...')#content.materialize-textarea.editable
+        #view.col.m6.s12
                     
 block script
     script(src="/js/editor.js")

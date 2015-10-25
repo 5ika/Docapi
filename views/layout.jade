@@ -9,6 +9,7 @@ html(lang='en')
       link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css')
       link(href='https://fonts.googleapis.com/css?family=Didact+Gothic' rel='stylesheet' type='text/css')
       link(rel='stylesheet', href='/css/style.css')
+      link(rel='stylesheet', href='/css/preview.css')
       script(src='/jquery/dist/jquery.js')
       script(src='/materialize/dist/js/materialize.min.js')
       script(src='/marked/marked.min.js')
@@ -16,8 +17,8 @@ html(lang='en')
     block js
   body
     .header
-        h4 docapi 
-            span.blue-text (beta)
+        h4 doc
+            span.docapi api
     .credentials
       a(href='https://github.com/5ika/Docapi.git') docapi v0.3
     block content
