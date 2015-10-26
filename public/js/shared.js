@@ -22,6 +22,8 @@ function send() {
                     $("#last-save").text("Dernière sauvegarde à " +
                         date);
                     lastContent = parameters.document.content;
+                    if (data.redirectToEdit) window.location.href =
+                        '/share/' + identifiant;
                 } else toast(
                     "Problème serveur. Document non sauvé.",
                     2000);
@@ -35,7 +37,7 @@ function del() {
             url: "/share/" + id,
             type: "DELETE",
             success: function(data) {
-                window.location.href = '/'
+                window.location.href = '/share/'
             }
         });
     else toast("Document non sauvé", 2000);

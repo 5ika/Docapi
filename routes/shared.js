@@ -22,6 +22,7 @@ router.get('/:identifiant', function(req, res) {
     })
 })
 
+// ADD/UPDATE shared document
 router.post('/', function(req, res) {
     if (req.body._id) {
         console.log("UPDATE " + req.body._id)
@@ -37,10 +38,44 @@ router.post('/', function(req, res) {
             console.log("ADD " + id);
             res.json({
                 message: ret,
-                id: id
+                id: id,
+                redirectToEdit: true
             });
         });
     }
+})
+
+// Download shared document
+router.get('/dl/:identifiant.md', function(req, res) {
+    doc.getShared(null, req.params.identifiant, function(err, document) {
+        console.log(document);
+        if (!err) {
+            res.header('Content-type', 'text/plain');
+            res.header('Content-Disposition',
+                'attachment; filename="' + document.title +
+                '.md"');
+            res.send("# " + document.title + "\n\n" + document.content);
+        } else res.json(err);
+    });
+});
+
+// Download pdf
+router.get('/dl/:identifiant.pdf', function(req, res) {
+    doc.convertShared(req.params.identifiant, function(err, path) {
+        if (!err) {
+            res.download(path, req.params.identifiant + ".pdf");
+        } else res.json(err);
+
+    });
+});
+
+// Delete shared document
+router.delete('/:id', function(req, res) {
+    doc.delShared(req.params.id, function(ret) {
+        res.json({
+            message: ret
+        });
+    })
 })
 
 module.exports = router;

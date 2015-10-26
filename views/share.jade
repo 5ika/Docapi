@@ -9,9 +9,9 @@ block content
                 a(data-target='modal-confirm' data-tooltip="Supprimer" data-position="top").btn.btn-flat.waves-effect.waves-light.modal-trigger.tooltipped
                     .fa.fa-trash-o
                 if(document)
-                    a(href="/api/dl/#{document._id}.md" target='_blank' data-tooltip="Télécharger en MD" data-position="top").waves-effect.waves-light.btn.btn-flat.tooltipped
+                    a(href="/share/dl/#{identifiant}.md" target='_blank' data-tooltip="Télécharger en MD" data-position="top").waves-effect.waves-light.btn.btn-flat.tooltipped
                         .fa.fa-download
-                    a(href="/api/dl/#{document._id}.pdf" target='_blank' data-tooltip="Télécharger en PDF" data-position="top").waves-effect.waves-light.btn.btn-flat.tooltipped
+                    a(href="/share/dl/#{identifiant}.pdf" target='_blank' data-tooltip="Télécharger en PDF" data-position="top").waves-effect.waves-light.btn.btn-flat.tooltipped
                         .fa.fa-file-pdf-o
                     a(onclick="newDocument()" data-tooltip="Nouveau" data-position="top").btn.btn-flat.waves-effect.waves-light.tooltipped
                         .fa.fa-file-text-o
@@ -61,8 +61,8 @@ block modals
         .modal-content
             h5 Êtes-vous certain de vouloir supprimer ?
         .modal-footer
-            a(onclick="del()").btn.btn-flat.btn-lg.waves-effect.modal-action.modal-close Oui
-            a.btn.btn-flat.btn-lg.waves-effect.modal-action.modal-close Non
+            a(onclick="del()").btn.btn-flat.waves-effect.modal-action.modal-close Oui
+            a.btn.btn-flat.waves-effect.modal-action.modal-close Non
 
     #modal-parameters.modal
         .modal-content

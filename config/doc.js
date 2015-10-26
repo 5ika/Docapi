@@ -106,6 +106,7 @@ doc.get = function(id, userID, callback) {
 
 // Récupérer un document partagé
 doc.getShared = function(id, identifiant, callback) {
+    console.log("ID : " + identifiant);
     var filters = {
         _id: id
     }
@@ -113,7 +114,6 @@ doc.getShared = function(id, identifiant, callback) {
         identifiant: identifiant
     }
     SharedDocument.findOne(filters, function(err, document) {
-        console.log(document);
         callback(err, document);
     })
 }
@@ -152,6 +152,40 @@ doc.convert = function(id, userID, callback) {
     });
 }
 
+// Convertir un document partagé en PDF pour récupération
+doc.convertShared = function(identifiant, callback) {
+    SharedDocument.findOne({
+        identifiant: identifiant,
+    }, function(err, document) {
+        var now = new Date();
+        var date = now.getDate() + "/" + (now.getMonth() + 1) +
+            "/" + now.getFullYear();
+        var header =
+            "---\ntitle: '" + document.title +
+            "'\nauthor: '" + document.username +
+            "'\ndate: '" + date;
+        if (document.context)
+            header += "'\nHautGauche: '" + document.context;
+        if (document.username)
+            header += "'\nHautDroit: '" + document.username;
+        if (document.toc)
+            header += "'\ntoc: 'true";
+        header += "'\ndocumentclass: 'report'\n...";
+        var contenu = header + "\n" + document.content;
+        fs.writeFile("tmp/" + identifiant + ".md", contenu,
+            function(
+                err) {
+                if (!err) {
+                    shell.exec("pandoc tmp/" + identifiant +
+                        ".md -o tmp/" + identifiant +
+                        ".pdf --template template.latex -N --smart"
+                    );
+                }
+                callback(err, "tmp/" + identifiant + ".pdf");
+            })
+    });
+}
+
 // Récupérer la liste des documents
 doc.getList = function(userID, callback) {
     Document.find({
@@ -180,6 +214,17 @@ doc.del = function(id, userID, callback) {
     }, function(err, document) {
         if (!err) callback(
             "Le document a bien été supprimé");
+        else callback('Pas de document avec cet id');
+    })
+}
+
+// Supprimer un document partagé
+doc.delShared = function(id, callback) {
+    SharedDocument.findOneAndRemove({
+        _id: id
+    }, function(err, document) {
+        if (!err) callback(
+            "Le document partagé a bien été supprimé");
         else callback('Pas de document avec cet id');
     })
 }
