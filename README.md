@@ -11,10 +11,11 @@ Pour le moment, l'API n'est pas encore documentée. Mais elle le sera prochainem
 
 # Self-hosting
 Vous pouvez installer Docapi sur votre propre serveur pour héberger les documents chez vous.
-Il est nécessaire d'avoir installé NodeJS, MongoDB et [Pandoc](http://pandoc.org/) au préalable.
+Il est nécessaire d'avoir installé NodeJS, MongoDB, [Pandoc](http://pandoc.org/) et le paquet de base de LaTeX (texlive-latex-base) au préalable.
 Le programme pandoc est utilisé pour convertir le markdown en fichier PDF.
 
 ```{.bash}
+sudo apt-get install pandoc texlive-latex-base texlive-fonts-recommended
 git clone git@github.com:5ika/Docapi.git
 npm install
 bower install

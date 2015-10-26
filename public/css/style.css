@@ -37,6 +37,9 @@ body{
     padding: 0px 15px;
     color:#f44336;
 }
+.btn-lg{
+    width:100%;
+}
 #editor a.btn:hover{
     background-color: #f44336;
     color:#FAFEFE;

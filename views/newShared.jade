@@ -1,0 +1,21 @@
+extends layout
+
+block content
+    .row(style="padding-top:150px;")
+        .col.s8.m2.offset-m5.offset-s2
+            .input-field
+                input(type="text" onkeypress="run(event)")#newSharedIdentifiant
+                label(for="newSharedIdentifiant") Identifiant du document
+            button.btn.btn-lg.btn-flat(onclick="goToShared()") Yeah !
+    
+    script.
+        function goToShared(){
+            var identifiant = $("#newSharedIdentifiant").val();
+            window.location.href ='/share/' + identifiant;
+        }
+        
+        function run(e) {
+            if (e.keyCode == 13) goToShared();
+        }
+        
+        

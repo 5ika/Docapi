@@ -4,6 +4,7 @@ function send() {
             console.log("Sauvegarde");
             var parameters = {
                 document: {
+                    identifiant: identifiant,
                     title: $('#title').val(),
                     content: $('#content').val(),
                     username: $('#username').val(),
@@ -11,11 +12,8 @@ function send() {
                     toc: $('#toc').is(':checked') || false
                 }
             };
-            if (id != 0) {
-                parameters._id = id;
-                $('.link-' + id).text(parameters.document.title);
-            }
-            $.post("/api", parameters, function(data) {
+            if (id != 0) parameters._id = id;
+            $.post("/share", parameters, function(data) {
                 if (data && !data.hasOwnProperty('error')) {
                     id = data.id;
                     toast(data.message, 2000);
@@ -24,8 +22,6 @@ function send() {
                     $("#last-save").text("Dernière sauvegarde à " +
                         date);
                     lastContent = parameters.document.content;
-                    if (data.redirectToEdit) window.location.href =
-                        '/' + id;
                 } else toast(
                     "Problème serveur. Document non sauvé.",
                     2000);
@@ -36,7 +32,7 @@ function send() {
 function del() {
     if (id != 0)
         $.ajax({
-            url: "/api/" + id,
+            url: "/share/" + id,
             type: "DELETE",
             success: function(data) {
                 window.location.href = '/'
@@ -46,5 +42,5 @@ function del() {
 };
 
 function newDocument() {
-    window.location.href = '/'
+    window.location.href = '/share'
 }

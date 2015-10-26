@@ -4,7 +4,7 @@ var router = express.Router();
 var doc = require("../config/doc");
 
 //TEST
-router.get('/crypto',function(req,res){
+router.get('/crypto', function(req, res) {
 	res.render('crypto');
 });
 

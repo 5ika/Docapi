@@ -1,4 +1,5 @@
 var Document = require('../models/document');
+var SharedDocument = require('../models/sharedDocument');
 var shell = require('shelljs');
 var fs = require('fs');
 
@@ -29,6 +30,31 @@ doc.add = function(document, userID, callback) {
     });
 }
 
+// Ajouter un document partagé
+doc.addShared = function(document, callback) {
+    var newDoc = new SharedDocument({
+        identifiant: document.identifiant,
+        date: Date.now(),
+        title: document.title,
+        content: document.content,
+        user: null,
+        toc: document.toc,
+        context: document.context,
+        username: document.username
+    });
+    newDoc.save(function(err) {
+        if (err) {
+            callback(err, 0);
+        }
+        SharedDocument.findOne({
+            title: newDoc.title,
+            date: newDoc.date
+        }, function(err, document) {
+            callback('Document partagé ajouté', document._id);
+        })
+    });
+}
+
 // Modifier un document
 doc.update = function(id, document, userID, callback) {
     Document.findOneAndUpdate({
@@ -49,6 +75,25 @@ doc.update = function(id, document, userID, callback) {
     })
 }
 
+// Modifier un document partagé
+doc.updateShared = function(id, document, callback) {
+    SharedDocument.findOneAndUpdate({
+        _id: id
+    }, {
+        date: Date.now(),
+        title: document.title,
+        content: document.content,
+        toc: document.toc,
+        context: document.context,
+        username: document.username
+    }, function(err) {
+        if (err) callback({
+            message: err
+        });
+        else callback("Document partagé sauvé", id);
+    })
+}
+
 // Récupérer un document
 doc.get = function(id, userID, callback) {
     Document.findOne({
@@ -56,6 +101,20 @@ doc.get = function(id, userID, callback) {
         user: userID
     }, function(err, document) {
         callback(null, document);
+    })
+}
+
+// Récupérer un document partagé
+doc.getShared = function(id, identifiant, callback) {
+    var filters = {
+        _id: id
+    }
+    if (identifiant) filters = {
+        identifiant: identifiant
+    }
+    SharedDocument.findOne(filters, function(err, document) {
+        console.log(document);
+        callback(err, document);
     })
 }
 

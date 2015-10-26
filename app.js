@@ -16,6 +16,7 @@ var mongoose = require('mongoose');
 var routes = require('./routes/index');
 var user = require('./routes/user');
 var api = require('./routes/api');
+var shared = require('./routes/shared');
 var config = require('./config');
 var shell = require('shelljs');
 
@@ -68,6 +69,7 @@ app.use(flash());
 ////////////
 // Routes //
 ////////////
+app.use('/share', shared);
 app.use('/', routes);
 app.use('/user', user);
 app.use('/api', api);

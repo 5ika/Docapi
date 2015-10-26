@@ -1,19 +1,9 @@
 extends layout
 
 block content
-    .user
-        a(href='/user/profile')
-            .chip
-                .fa.fa-user
-                if(user)
-                    |  #{user}
-                else
-                    | No user
     .row
         #editor.col.m6.s12    
             .col.s12.m12
-                a(href='#modal-list' data-tooltip="Mes documents" data-position="top").waves-effect.waves-light.btn.btn-flat.modal-trigger.tooltipped
-                    .fa.fa-list
                 a(onclick="send()" data-tooltip="Enregistrer" data-position="top").btn.btn-flat.waves-effect.waves-light.tooltipped
                     .fa.fa-save
                 a(data-target='modal-confirm' data-tooltip="Supprimer" data-position="top").btn.btn-flat.waves-effect.waves-light.modal-trigger.tooltipped
@@ -46,13 +36,15 @@ block content
         #view.col.m6.s12
                     
 block script
-    script(src="/js/editor.js")
+    script(src="/js/shared.js")
     script(src="/js/tools.js")
     script
         if(document)
             | var id = "#{document._id}";
         else
             | var id = 0;
+        if(identifiant)
+            | var identifiant = "#{identifiant}"
             
 block modals
     #modal-list.modal.bottom-sheet
