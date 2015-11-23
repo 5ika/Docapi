@@ -6,17 +6,17 @@ block content
             .col.s12.m12
                 a(onclick="send()" data-tooltip="Enregistrer" data-position="top").btn.btn-flat.waves-effect.waves-light.tooltipped
                     .fa.fa-save
-                a(data-target='modal-confirm' data-tooltip="Supprimer" data-position="top").btn.btn-flat.waves-effect.waves-light.modal-trigger.tooltipped
-                    .fa.fa-trash-o
                 if(document)
+                    a(onclick="newDocument()" data-tooltip="Nouveau" data-position="top").btn.btn-flat.waves-effect.waves-light.tooltipped
+                        .fa.fa-plus
+                    a(data-target='modal-confirm' data-tooltip="Supprimer" data-position="top").btn.btn-flat.waves-effect.waves-light.modal-trigger.tooltipped
+                        .fa.fa-trash-o
                     a(href="/share/dl/#{identifiant}.md" target='_blank' data-tooltip="Télécharger en MD" data-position="top").waves-effect.waves-light.btn.btn-flat.tooltipped
                         .fa.fa-file-text-o
                     a(href="/share/dl/#{identifiant}.pdf" target='_blank' data-tooltip="Télécharger en PDF" data-position="top").waves-effect.waves-light.btn.btn-flat.tooltipped
                         .fa.fa-file-pdf-o
                     a(href="/share/dl/#{identifiant}.docx" target='_blank' data-tooltip="Télécharger en DOCX" data-position="top").waves-effect.waves-light.btn.btn-flat.tooltipped
                         .fa.fa-file-word-o
-                    a(onclick="newDocument()" data-tooltip="Nouveau" data-position="top").btn.btn-flat.waves-effect.waves-light.tooltipped
-                        .fa.fa-plus
                     a(onclick="parameters()" data-tooltip="Paramètres" data-position="top").btn.btn-flat.waves-effect.waves-light#preview-btn.tooltipped
                         .fa.fa-cog
                 a(onclick="toggleNumberedTitles()" data-tooltip="Numérotation des titres" data-position="top").btn.btn-flat.waves-effect.waves-light#preview-btn.tooltipped

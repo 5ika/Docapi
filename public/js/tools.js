@@ -68,6 +68,12 @@ function parameters() {
     else $('#modal-parameters').closeModal();
 }
 
+function getTags() {
+    let tagsString = $("#tags").val();
+    let tags = tagsString.split(/[,;] */);
+    return tags.join(', ');
+}
+
 //Gestion des touches claviers spéciales
 $("textarea").keydown(function(e) {
     // Tabulation dans l'éditeur

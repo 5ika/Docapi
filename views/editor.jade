@@ -16,17 +16,17 @@ block content
                     .fa.fa-list
                 a(onclick="send()" data-tooltip="Enregistrer" data-position="top").btn.btn-flat.waves-effect.waves-light.tooltipped
                     .fa.fa-save
-                a(data-target='modal-confirm' data-tooltip="Supprimer" data-position="top").btn.btn-flat.waves-effect.waves-light.modal-trigger.tooltipped
-                    .fa.fa-trash-o
                 if(document)
+                    a(onclick="newDocument()" data-tooltip="Nouveau" data-position="top").btn.btn-flat.waves-effect.waves-light.tooltipped
+                        .fa.fa-plus
+                    a(data-target='modal-confirm' data-tooltip="Supprimer" data-position="top").btn.btn-flat.waves-effect.waves-light.modal-trigger.tooltipped
+                        .fa.fa-trash-o
                     a(href="/api/dl/#{document._id}.md" target='_blank' data-tooltip="Télécharger en MD" data-position="top").waves-effect.waves-light.btn.btn-flat.tooltipped
                         .fa.fa-file-text-o
                     a(href="/api/dl/#{document._id}.pdf" target='_blank' data-tooltip="Télécharger en PDF" data-position="top").waves-effect.waves-light.btn.btn-flat.tooltipped
                         .fa.fa-file-pdf-o
                     a(href="/api/dl/#{document._id}.docx" target='_blank' data-tooltip="Télécharger en DOCX" data-position="top").waves-effect.waves-light.btn.btn-flat.tooltipped
                         .fa.fa-file-word-o
-                    a(onclick="newDocument()" data-tooltip="Nouveau" data-position="top").btn.btn-flat.waves-effect.waves-light.tooltipped
-                        .fa.fa-plus
                     a(onclick="parameters()" data-tooltip="Paramètres" data-position="top").btn.btn-flat.waves-effect.waves-light#preview-btn.tooltipped
                         .fa.fa-cog
                 a(onclick="toggleNumberedTitles()" data-tooltip="Numérotation des titres" data-position="top").btn.btn-flat.waves-effect.waves-light#preview-btn.tooltipped
@@ -40,7 +40,8 @@ block content
                         if(document)
                             input#title.editable(type="text" value='#{document.title}' autocomplete="off")
                         else
-                            input#title.editable(type="text" placeholder="Titre du document")
+                            input#title.editable(type="text")
+                        label(for='title') Titre
                 .row
                     .input-field.col.s12
                         if(document)
@@ -65,7 +66,11 @@ block modals
             if(list)
                 .collection
                     each doc in list
-                        a.collection-item(href='/#{doc._id}' class='link-#{doc._id}') #{doc.title}
+                        a.collection-item(href='/#{doc._id}' class='link-#{doc._id}')
+                            span.doc-title #{doc.title}
+                            if(doc.tags)
+                                each tag in doc.tags
+                                    .chip.secondary-content.tag #{tag}
             else
                 | Pas de document
                 
@@ -78,7 +83,14 @@ block modals
 
     #modal-parameters.modal
         .modal-content
-            h5 Paramètres
+            h4 Paramètres
+            h5 Tags
+                .input-field
+                    if(document && document.tags)
+                        input#tags(type='text' value="#{document.tags}")
+                    else
+                        input#tags(type='text' placeholder="Tags séparés par des ',' ou des ';'")
+            h5 Exportation PDF
             p Vous pouvez modifier ici les paramètres de conversion pour le format PDF.
             .row
                 .input-field.col.s12.m6
@@ -103,4 +115,4 @@ block modals
                         script.
                             $("#toc").prop('checked',#{document.toc});
         .modal-footer
-            a(href="#").modal-action.modal-close.btn-flat Fermer
+            a(href="#" onclick='send(true)').modal-action.modal-close.btn-flat Terminé

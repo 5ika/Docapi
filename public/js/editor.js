@@ -1,11 +1,12 @@
-function send() {
-    if ($('#content').val() != lastContent)
+function send(forceSave = false) {
+    if ($('#content').val() != lastContent || forceSave)
         if ($('#title').val() != "") {
             console.log("Sauvegarde");
             var parameters = {
                 document: {
                     title: $('#title').val(),
                     content: $('#content').val(),
+                    tags: getTags(),
                     username: $('#username').val(),
                     context: $('#context').val(),
                     toc: $('#toc').is(':checked') || false
@@ -13,7 +14,7 @@ function send() {
             };
             if (id != 0) {
                 parameters._id = id;
-                $('.link-' + id).text(parameters.document.title);
+                $('.link-' + id + " .doc-title").text(parameters.document.title);
             }
             $.post("/api", parameters, function(data) {
                 if (data && !data.hasOwnProperty('error')) {

@@ -11,6 +11,7 @@ doc.add = function(document, userID, callback) {
         date: Date.now(),
         title: document.title,
         content: document.content,
+        tags: document.tags ? document.tags.split(', ') : null,
         user: userID,
         toc: document.toc,
         context: document.context,
@@ -64,6 +65,7 @@ doc.update = function(id, document, userID, callback) {
         date: Date.now(),
         title: document.title,
         content: document.content,
+        tags: document.tags ? document.tags.split(', ') : null,
         toc: document.toc,
         context: document.context,
         username: document.username

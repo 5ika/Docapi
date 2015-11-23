@@ -58,6 +58,17 @@ body{
 #last-save{
     color:grey;
 }
+.tag{
+    position: relative;
+    top: -6px;
+    margin: 2px;
+    color:#FAFEFE;
+    background-color: #f44336;
+}
+.collection .collection-item.active .tag{
+    color:#f44336;
+    background-color: #FAFEFE;
+}
 
 /* Red-tifisation*/
 a.btn:hover, a.btn-large:hover,a.btn-flat:hover,button.btn:hover,button:focus,.collection .collection-item.active{
