@@ -61,12 +61,23 @@ router.get('/dl/:identifiant.md', function(req, res) {
 
 // Download pdf
 router.get('/dl/:identifiant.pdf', function(req, res) {
-    doc.convertShared(req.params.identifiant, function(err, path) {
+    doc.convertShared(req.params.identifiant, 'pdf', function(err, path) {
         if (!err) {
             res.download(path, req.params.identifiant + ".pdf");
         } else res.json(err);
 
     });
+});
+
+// Download docx
+router.get('/dl/:identifiant.docx', function(req, res) {
+    doc.convertShared(req.params.identifiant, 'docx',
+        function(err, path) {
+            if (!err) {
+                res.download(path, req.params.identifiant + ".docx");
+            } else res.json(err);
+
+        });
 });
 
 // Delete shared document

@@ -15,7 +15,7 @@ Il est nécessaire d'avoir installé NodeJS, MongoDB, [Pandoc](http://pandoc.org
 Le programme pandoc est utilisé pour convertir le markdown en fichier PDF.
 
 ```{.bash}
-sudo apt-get install pandoc texlive-latex-base texlive-fonts-recommended
+sudo apt-get install pandoc texlive-latex-base texlive-fonts-recommended texlive-latex-recommended
 git clone git@github.com:5ika/Docapi.git
 npm install
 bower install
@@ -29,3 +29,4 @@ npm start
 - A la suppression d'un utilisateur :
     - Supprimer ses documents
     - Demander une confirmation (idem que pour un document)
+- Exportation PDF à choix lors de l'installation (il n'est pas forcément appréciable de télécharger tout LaTeX)

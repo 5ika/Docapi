@@ -20,13 +20,17 @@ block content
                     .fa.fa-trash-o
                 if(document)
                     a(href="/api/dl/#{document._id}.md" target='_blank' data-tooltip="Télécharger en MD" data-position="top").waves-effect.waves-light.btn.btn-flat.tooltipped
-                        .fa.fa-download
+                        .fa.fa-file-text-o
                     a(href="/api/dl/#{document._id}.pdf" target='_blank' data-tooltip="Télécharger en PDF" data-position="top").waves-effect.waves-light.btn.btn-flat.tooltipped
                         .fa.fa-file-pdf-o
+                    a(href="/api/dl/#{document._id}.docx" target='_blank' data-tooltip="Télécharger en DOCX" data-position="top").waves-effect.waves-light.btn.btn-flat.tooltipped
+                        .fa.fa-file-word-o
                     a(onclick="newDocument()" data-tooltip="Nouveau" data-position="top").btn.btn-flat.waves-effect.waves-light.tooltipped
-                        .fa.fa-file-text-o
+                        .fa.fa-plus
                     a(onclick="parameters()" data-tooltip="Paramètres" data-position="top").btn.btn-flat.waves-effect.waves-light#preview-btn.tooltipped
                         .fa.fa-cog
+                a(onclick="toggleNumberedTitles()" data-tooltip="Numérotation des titres" data-position="top").btn.btn-flat.waves-effect.waves-light#preview-btn.tooltipped
+                    .fa.fa-list-ol
                 a(onclick="togglePreview()" data-tooltip="Mode Preview" data-position="top").btn.btn-flat.waves-effect.waves-light#preview-btn.tooltipped
                     .fa.fa-eye-slash
                 #last-save
@@ -43,7 +47,7 @@ block content
                             textarea(placeholder='Contenu du document...')#content.materialize-textarea.editable #{document.content}
                         else 
                             textarea(placeholder='Contenu du document...')#content.materialize-textarea.editable
-        #view.col.m6.s12
+        #view.numbered-view.col.m6.s12
                     
 block script
     script(src="/js/editor.js")

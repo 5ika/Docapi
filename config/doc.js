@@ -119,70 +119,94 @@ doc.getShared = function(id, identifiant, callback) {
 }
 
 // Convertir un document en PDF pour récupération
-doc.convert = function(id, userID, callback) {
+doc.convert = function(id, userID, format, callback) {
+    try {
+        fs.statSync('template.latex');
+    } catch (err) {
+        console.log(
+            "[WARNING] Docapi doit être lancé à partir de son dossier racine pour pouvoir convertir un fichier"
+        );
+        callback({
+            error: 'Mauvaise configuration du serveur'
+        });
+    }
     Document.findOne({
         _id: id,
         user: userID
     }, function(err, document) {
-        var now = new Date();
-        var date = now.getDate() + "/" + (now.getMonth() + 1) +
-            "/" + now.getFullYear();
-        var header =
-            "---\ntitle: '" + document.title +
-            "'\nauthor: '" + document.username +
-            "'\ndate: '" + date;
-        if (document.context)
-            header += "'\nHautGauche: '" + document.context;
-        if (document.username)
-            header += "'\nHautDroit: '" + document.username;
-        if (document.toc)
-            header += "'\ntoc: 'true";
-        header += "'\ndocumentclass: 'report'\n...";
-        var contenu = header + "\n" + document.content;
-        fs.writeFile("tmp/" + id + ".md", contenu, function(
-            err) {
-            if (!err) {
-                shell.exec("pandoc tmp/" + id +
-                    ".md -o tmp/" + id +
-                    ".pdf --template template.latex -N --smart"
-                );
-            }
-            callback(err, "tmp/" + id + ".pdf");
-        })
+        if (document) {
+            var now = new Date();
+            var date = now.getDate() + "/" + (now.getMonth() + 1) +
+                "/" + now.getFullYear();
+            var header =
+                "---\ntitle: '" + document.title +
+                "'\nauthor: '" + document.username +
+                "'\ndate: '" + date;
+            if (document.context)
+                header += "'\nHautGauche: '" + document.context;
+            if (document.username)
+                header += "'\nHautDroit: '" + document.username;
+            if (document.toc)
+                header += "'\ntoc: 'true";
+            header += "'\ndocumentclass: 'report'\n...";
+            var contenu = header + "\n" + document.content;
+            fs.writeFile("tmp/" + id + ".md", contenu, function(
+                err) {
+                if (!err) {
+                    shell.exec("pandoc tmp/" + id +
+                        ".md -o tmp/" + id +
+                        "." + format +
+                        " --template template.latex -N --smart"
+                    );
+                }
+                removeTemporaryFile(id, format);
+                callback(err, "tmp/" + id + '.' + format);
+            })
+        } else callback({
+            error: "Requête invalide"
+        });
     });
+
 }
 
 // Convertir un document partagé en PDF pour récupération
-doc.convertShared = function(identifiant, callback) {
+doc.convertShared = function(identifiant, format, callback) {
     SharedDocument.findOne({
         identifiant: identifiant,
     }, function(err, document) {
-        var now = new Date();
-        var date = now.getDate() + "/" + (now.getMonth() + 1) +
-            "/" + now.getFullYear();
-        var header =
-            "---\ntitle: '" + document.title +
-            "'\nauthor: '" + document.username +
-            "'\ndate: '" + date;
-        if (document.context)
-            header += "'\nHautGauche: '" + document.context;
-        if (document.username)
-            header += "'\nHautDroit: '" + document.username;
-        if (document.toc)
-            header += "'\ntoc: 'true";
-        header += "'\ndocumentclass: 'report'\n...";
-        var contenu = header + "\n" + document.content;
-        fs.writeFile("tmp/" + identifiant + ".md", contenu,
-            function(
-                err) {
-                if (!err) {
-                    shell.exec("pandoc tmp/" + identifiant +
-                        ".md -o tmp/" + identifiant +
-                        ".pdf --template template.latex -N --smart"
-                    );
-                }
-                callback(err, "tmp/" + identifiant + ".pdf");
-            })
+        if (document) {
+            var now = new Date();
+            var date = now.getDate() + "/" + (now.getMonth() + 1) +
+                "/" + now.getFullYear();
+            var header =
+                "---\ntitle: '" + document.title +
+                "'\nauthor: '" + document.username +
+                "'\ndate: '" + date;
+            if (document.context)
+                header += "'\nHautGauche: '" + document.context;
+            if (document.username)
+                header += "'\nHautDroit: '" + document.username;
+            if (document.toc)
+                header += "'\ntoc: 'true";
+            header += "'\ndocumentclass: 'report'\n...";
+            var contenu = header + "\n" + document.content;
+            fs.writeFile("tmp/" + identifiant + ".md", contenu,
+                function(
+                    err) {
+                    if (!err) {
+                        shell.exec("pandoc tmp/" + identifiant +
+                            ".md -o tmp/" + identifiant +
+                            "." + format +
+                            " --template template.latex -N --smart"
+                        );
+                    }
+                    removeTemporaryFile(identifiant, format);
+                    callback(err, "tmp/" + identifiant + "." +
+                        format);
+                })
+        } else callback({
+            error: "Requête invalide"
+        });
     });
 }
 
@@ -239,6 +263,13 @@ doc.delUser = function(userID, callback) {
         });
         callback();
     })
+}
+
+function removeTemporaryFile(docId, format) {
+    setTimeout(function() {
+        fs.unlink('tmp/' + docId + '.' + format);
+        fs.unlink('tmp/' + docId + '.md');
+    }, 60000);
 }
 
 module.exports = doc;

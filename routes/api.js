@@ -76,10 +76,21 @@ router.get('/dl/:id.md', isLoggedIn, function(req, res) {
 
 // Download pdf
 router.get('/dl/:id.pdf', isLoggedIn, function(req, res) {
-    doc.convert(req.params.id, req.user._id, function(err, path) {
+    doc.convert(req.params.id, req.user._id, 'pdf', function(err, path) {
         if (!err) {
             res.download(path, "Docapi-" + req.params.id +
                 ".pdf");
+        } else res.json(err);
+
+    });
+});
+
+// Download docx
+router.get('/dl/:id.docx', isLoggedIn, function(req, res) {
+    doc.convert(req.params.id, req.user._id, 'docx', function(err, path) {
+        if (!err) {
+            res.download(path, "Docapi-" + req.params.id +
+                ".docx");
         } else res.json(err);
 
     });

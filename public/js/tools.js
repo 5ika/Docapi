@@ -1,6 +1,7 @@
 var toast = Materialize.toast;
 var preview = true;
 var lastContent = "";
+let waitForConvert = false;
 
 $(document).ready(function() {
     $('.modal-trigger').leanModal();
@@ -17,15 +18,30 @@ $(document).ready(function() {
 });
 
 function toMarkdown() {
-    var titre = "";
-    if ($('#title').val() != "") titre = "# " + $('#title').val() + "\n";
-    var content = titre + $("#content").val();
+    if (preview) {
+        let charCount = $('#content').val().length;
+        if (charCount < 10000) md();
+        else if (!waitForConvert) {
+            waitForConvert = true;
+            setTimeout(function() {
+                waitForConvert = false;
+                md();
+            }, 1500);
+        }
+    }
+};
+
+function md() {
+    let titre = "";
+    if ($('#title').val() != "") titre = "# " + $('#title').val() +
+        "\n";
+    let content = titre + $("#content").val();
     //content = content.replace(/(<([^>]+)>)/ig, "");
     content = content.replace(/(<script>)/ig, "[Javascript]\n");
     content = content.replace(/(<\/script>)/ig, "\n[/Javascript]");
-    var md = marked(content);
+    let md = marked(content);
     $("#view").html(md);
-};
+}
 
 function togglePreview() {
     if (preview) {
@@ -37,8 +53,13 @@ function togglePreview() {
         $('#editor').addClass('m6').removeClass('m12');
         $('#view').show();
         $(".fa-eye").removeClass('fa-eye').addClass('fa-eye-slash');
+        md();
     }
     preview = !preview;
+}
+
+function toggleNumberedTitles() {
+    $("#view").toggleClass('numbered-view');
 }
 
 function parameters() {
