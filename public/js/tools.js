@@ -1,7 +1,7 @@
 var toast = Materialize.toast;
 var preview = true;
 var lastContent = "";
-let waitForConvert = false;
+var waitForConvert = false;
 
 $(document).ready(function() {
     $('.modal-trigger').leanModal();
@@ -19,7 +19,7 @@ $(document).ready(function() {
 
 function toMarkdown() {
     if (preview) {
-        let charCount = $('#content').val().length;
+        var charCount = $('#content').val().length;
         if (charCount < 10000) md();
         else if (!waitForConvert) {
             waitForConvert = true;
@@ -32,14 +32,14 @@ function toMarkdown() {
 };
 
 function md() {
-    let titre = "";
+    var titre = "";
     if ($('#title').val() != "") titre = "# " + $('#title').val() +
         "\n";
-    let content = titre + $("#content").val();
+    var content = titre + $("#content").val();
     //content = content.replace(/(<([^>]+)>)/ig, "");
     content = content.replace(/(<script>)/ig, "[Javascript]\n");
     content = content.replace(/(<\/script>)/ig, "\n[/Javascript]");
-    let md = marked(content);
+    var md = marked(content);
     $("#view").html(md);
 }
 
@@ -69,8 +69,8 @@ function parameters() {
 }
 
 function getTags() {
-    let tagsString = $("#tags").val();
-    let tags = tagsString.split(/[,;] */);
+    var tagsString = $("#tags").val();
+    var tags = tagsString.split(/[,;] */);
     return tags.join(', ');
 }
 
