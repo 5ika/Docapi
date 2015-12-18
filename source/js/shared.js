@@ -1,22 +1,19 @@
-function send(forceSave = false) {
-    if (editeur.getValue() != lastContent || forceSave)
+function send() {
+    if ($('#content').val() != lastContent)
         if ($('#title').val() != "") {
             console.log("Sauvegarde");
             var parameters = {
                 document: {
+                    identifiant: identifiant,
                     title: $('#title').val(),
-                    content: editeur.getValue(),
-                    tags: getTags(),
+                    content: $('#content').val(),
                     username: $('#username').val(),
                     context: $('#context').val(),
                     toc: $('#toc').is(':checked') || false
                 }
             };
-            if (id != 0) {
-                parameters._id = id;
-                $('.link-' + id + " .doc-title").text(parameters.document.title);
-            }
-            $.post("/api", parameters, function(data) {
+            if (id != 0) parameters._id = id;
+            $.post("/share", parameters, function(data) {
                 if (data && !data.hasOwnProperty('error')) {
                     id = data.id;
                     toast(data.message, 2000);
@@ -26,7 +23,7 @@ function send(forceSave = false) {
                         date);
                     lastContent = parameters.document.content;
                     if (data.redirectToEdit) window.location.href =
-                        '/' + id;
+                        '/share/' + identifiant;
                 } else toast(
                     "Problème serveur. Document non sauvé.",
                     2000);
@@ -37,15 +34,15 @@ function send(forceSave = false) {
 function del() {
     if (id != 0)
         $.ajax({
-            url: "/api/" + id,
+            url: "/share/" + id,
             type: "DELETE",
             success: function(data) {
-                window.location.href = '/'
+                window.location.href = '/share/'
             }
         });
     else toast("Document non sauvé", 2000);
 };
 
 function newDocument() {
-    window.location.href = '/'
+    window.location.href = '/share'
 }

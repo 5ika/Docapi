@@ -10,29 +10,34 @@ block content
                 else
                     | No user
     .row
-        #editor.col.m6.s12    
+        #editor.col.m12.s12    
             .col.s12.m12
                 a(href='#modal-list' data-tooltip="Mes documents" data-position="top").waves-effect.waves-light.btn.btn-flat.modal-trigger.tooltipped
-                    .fa.fa-list
+                  .fa.fa-list
                 a(onclick="send()" data-tooltip="Enregistrer" data-position="top").btn.btn-flat.waves-effect.waves-light.tooltipped
-                    .fa.fa-save
+                  .fa.fa-save
                 if(document)
                     a(onclick="newDocument()" data-tooltip="Nouveau" data-position="top").btn.btn-flat.waves-effect.waves-light.tooltipped
-                        .fa.fa-plus
+                      .fa.fa-plus
                     a(data-target='modal-confirm' data-tooltip="Supprimer" data-position="top").btn.btn-flat.waves-effect.waves-light.modal-trigger.tooltipped
-                        .fa.fa-trash-o
-                    a(href="/api/dl/#{document._id}.md" target='_blank' data-tooltip="Télécharger en MD" data-position="top").waves-effect.waves-light.btn.btn-flat.tooltipped
-                        .fa.fa-file-text-o
-                    a(href="/api/dl/#{document._id}.pdf" target='_blank' data-tooltip="Télécharger en PDF" data-position="top").waves-effect.waves-light.btn.btn-flat.tooltipped
-                        .fa.fa-file-pdf-o
-                    a(href="/api/dl/#{document._id}.docx" target='_blank' data-tooltip="Télécharger en DOCX" data-position="top").waves-effect.waves-light.btn.btn-flat.tooltipped
-                        .fa.fa-file-word-o
+                      .fa.fa-trash-o
+                    a.dropdown-button(data-activates='menu-dl' data-tooltip="Télécharger" data-position="top").btn.btn-flat.waves-effect.waves-light.modal-trigger.tooltipped
+                      .fa.fa-download
+                    ul#menu-dl.dropdown-content
+                      li: a(href="/api/dl/#{document._id}.md" target='_blank' data-tooltip="Télécharger en MD" data-position="top").waves-effect.waves-light.btn.btn-flat.tooltipped
+                        | MD
+                      li: a(href="/api/dl/#{document._id}.pdf" target='_blank' data-tooltip="Télécharger en PDF" data-position="top").waves-effect.waves-light.btn.btn-flat.tooltipped
+                        | PDF
+                      li: a(href="/api/dl/#{document._id}.docx" target='_blank' data-tooltip="Télécharger en DOCX" data-position="top").waves-effect.waves-light.btn.btn-flat.tooltipped
+                        | DOCX
                     a(onclick="parameters()" data-tooltip="Paramètres" data-position="top").btn.btn-flat.waves-effect.waves-light#preview-btn.tooltipped
-                        .fa.fa-cog
-                a(onclick="toggleNumberedTitles()" data-tooltip="Numérotation des titres" data-position="top").btn.btn-flat.waves-effect.waves-light#preview-btn.tooltipped
-                    .fa.fa-list-ol
+                      .fa.fa-cog
+                a(onclick="toggleFullscreen()" data-tooltip="Plein écran" data-position="top").btn.btn-flat.waves-light.tooltipped
+                  .fa.fa-arrows-alt
+                a(onclick="toggleNumberedTitles()" data-tooltip="Numérotation des titres en Preview" data-position="top").btn.btn-flat.waves-effect.waves-light#preview-btn.tooltipped
+                  .fa.fa-list-ol
                 a(onclick="togglePreview()" data-tooltip="Mode Preview" data-position="top").btn.btn-flat.waves-effect.waves-light#preview-btn.tooltipped
-                    .fa.fa-eye-slash
+                  .fa.fa-eye
                 #last-save
             form(onSubmit="return false;").col.m12.s12
                 .row
@@ -48,7 +53,9 @@ block content
                             textarea(placeholder='Contenu du document...')#content.materialize-textarea.editable #{document.content}
                         else 
                             textarea(placeholder='Contenu du document...')#content.materialize-textarea.editable
-        #view.numbered-view.col.m6.s12
+        #view.numbered-view.col.m6.s12.hidden
+        .btn-fullscreen-disable(onclick="toggleFullscreen()").hide
+          .fa.fa-arrows-alt.fa-2x
                     
 block script
     script(src="/js/editor.js")
