@@ -78,8 +78,7 @@ router.get('/dl/:id.md', isLoggedIn, function(req, res) {
 router.get('/dl/:id.pdf', isLoggedIn, function(req, res) {
     doc.convert(req.params.id, req.user._id, 'pdf', function(error, path) {
         if (!error) {
-            res.download(path, "Docapi-" + req.params.id +
-                ".pdf");
+            res.download(path, "Docapi-" + req.params.id +".pdf");
         } else res.render('error', {error});
 
     });

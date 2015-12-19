@@ -105,10 +105,15 @@ $(document).keydown(function(e) {
       case 83:
         send();
         break;
-        //CTRL+O : Toggle Preview
+      //CTRL+N : Nouveau document
+      case 78:
+        newDocument();
+        break;
+      //CTRL+O : Toggle Preview
       case 79:
         togglePreview();
         break;
+      //CTRL+O : Toggle FullScreen
       case 80:
         toggleFullscreen();
         break;

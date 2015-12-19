@@ -154,8 +154,9 @@ doc.convert = function (id, userID, format, callback) {
       var contenu = header + "\n" + document.content;
       fs.writeFile("tmp/" + id + ".md", contenu, function (
         err) {
+        var shellGet = {};
         if (!err) {
-          var shellGet = shell.exec("pandoc tmp/" + id +
+          shellGet = shell.exec("pandoc tmp/" + id +
             ".md -o tmp/" + id +
             "." + format +
             " --template template.latex -N --smart"
@@ -205,8 +206,9 @@ doc.convertShared = function (identifiant, format, callback) {
       fs.writeFile("tmp/" + identifiant + ".md", contenu,
         function (
           err) {
+          var shellGet = {};
           if (!err) {
-            var shellGet = shell.exec("pandoc tmp/" + identifiant +
+            shellGet = shell.exec("pandoc tmp/" + identifiant +
               ".md -o tmp/" + identifiant +
               "." + format +
               " --template template.latex -N --smart >> convert.log"
@@ -296,8 +298,8 @@ function removeTemporaryFile(docId, format) {
   setTimeout(function () {
     try {
       fs.statSync(convertedFile);
-      fs.unlink(convertedFile)
-    } catch(err){}
+      fs.unlink(convertedFile);
+    } catch (err) {}
   }, 60000);
 }
 
