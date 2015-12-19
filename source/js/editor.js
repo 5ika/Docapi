@@ -1,4 +1,4 @@
-function send() {
+function send(forceSave) {
     if (editeur.getValue() != lastContent || forceSave)
         if ($('#title').val() !== "") {
             console.log("Sauvegarde");

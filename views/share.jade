@@ -45,7 +45,9 @@ block content
         #view.numbered-view.col.m6.s12.hidden
         .btn-fullscreen-disable(onclick="toggleFullscreen()").hide
           .fa.fa-arrows-alt.fa-2x      
+          
 block script
+    script(src="/socket.io/socket.io.js")
     script(src="/js/bundle-share.js")
     script
         if(document)

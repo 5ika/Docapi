@@ -22,7 +22,13 @@ if (fs.existsSync('tls/docapi-key.pem') && fs.existsSync('tls/docapi-cert.pem'))
 		);
 	});
 } else {
-	var server = app.listen(app.get('port'), function() {
+	var http = require('http').Server(app);
+	var io = require('socket.io')(http);
+	var socketIO = require('../config/socketIO.js');
+
+	io.on('connection', socketIO);
+
+	var server = http.listen(app.get('port'), function() {
 		console.log(
 			config.app.name + ' listening on port ' + server.address().port
 		);

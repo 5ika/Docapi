@@ -83,41 +83,29 @@ function getTags() {
   return tags.join(', ');
 }
 
-//Gestion des touches claviers spéciales
-$("textarea").keydown(function(e) {
-  // Tabulation dans l'éditeur
-  if (e.keyCode === 9) {
-    var start = this.selectionStart;
-    var end = this.selectionEnd;
-    var $this = $(this);
-    var value = $this.val();
-    $this.val(value.substring(0, start) + "\t" + value.substring(
-      end));
-    this.selectionStart = this.selectionEnd = start + 1;
-    e.preventDefault();
-  }
-});
 $(document).keydown(function(e) {
-  console.log(e.keyCode);
   if (e.ctrlKey) {
     switch (e.keyCode) {
       //CTRL+S : Sauvegarde manuelle
       case 83:
         send();
+        e.preventDefault();
         break;
       //CTRL+N : Nouveau document
       case 78:
         newDocument();
+        e.preventDefault();
         break;
       //CTRL+O : Toggle Preview
       case 79:
         togglePreview();
+        e.preventDefault();
         break;
       //CTRL+O : Toggle FullScreen
       case 80:
         toggleFullscreen();
+        e.preventDefault();
         break;
     }
-    e.preventDefault();
   }
 });
