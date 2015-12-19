@@ -21,7 +21,7 @@ block content
                       .fa.fa-plus
                     a(data-target='modal-confirm' data-tooltip="Supprimer" data-position="top").btn.btn-flat.waves-effect.waves-light.modal-trigger.tooltipped
                       .fa.fa-trash-o
-                    a.dropdown-button(data-activates='menu-dl' data-tooltip="Télécharger" data-position="top").btn.btn-flat.waves-effect.waves-light.modal-trigger.tooltipped
+                    a.dropdown-button(data-activates='menu-dl' data-tooltip="Télécharger" data-position="top").btn.btn-flat.waves-effect.waves-light.tooltipped
                       .fa.fa-download
                     ul#menu-dl.dropdown-content
                       li: a(href="/api/dl/#{document._id}.md" target='_blank' data-tooltip="Télécharger en MD" data-position="top").waves-effect.waves-light.btn.btn-flat.tooltipped
@@ -58,8 +58,7 @@ block content
           .fa.fa-arrows-alt.fa-2x
                     
 block script
-    script(src="/js/editor.js")
-    script(src="/js/tools.js")
+    script(src="/js/bundle.js")
     script
         if(document)
             | var id = "#{document._id}";

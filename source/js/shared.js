@@ -1,18 +1,18 @@
 function send() {
-    if ($('#content').val() != lastContent)
-        if ($('#title').val() != "") {
+    if (editeur.getValue() != lastContent)
+        if ($('#title').val() !== "") {
             console.log("Sauvegarde");
             var parameters = {
                 document: {
                     identifiant: identifiant,
                     title: $('#title').val(),
-                    content: $('#content').val(),
+                    content: editeur.getValue(),
                     username: $('#username').val(),
                     context: $('#context').val(),
                     toc: $('#toc').is(':checked') || false
                 }
             };
-            if (id != 0) parameters._id = id;
+            if (id !== 0) parameters._id = id;
             $.post("/share", parameters, function(data) {
                 if (data && !data.hasOwnProperty('error')) {
                     id = data.id;
@@ -29,20 +29,20 @@ function send() {
                     2000);
             });
         } else toast("Pas de titre. Document non sauvé", 2000);
-};
+}
 
 function del() {
-    if (id != 0)
+    if (id !== 0)
         $.ajax({
             url: "/share/" + id,
             type: "DELETE",
             success: function(data) {
-                window.location.href = '/share/'
+                window.location.href = '/share/';
             }
         });
     else toast("Document non sauvé", 2000);
-};
+}
 
 function newDocument() {
-    window.location.href = '/share'
+    window.location.href = '/share';
 }

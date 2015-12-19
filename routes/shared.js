@@ -8,8 +8,8 @@ router.get('/', function(req, res) {
         if (!err)
             res.render('newShared');
         else res.json(err);
-    })
-})
+    });
+});
 
 router.get('/:identifiant', function(req, res) {
     doc.getShared(null, req.params.identifiant, function(err, document) {
@@ -19,13 +19,13 @@ router.get('/:identifiant', function(req, res) {
                 identifiant: req.params.identifiant
             });
         } else res.json(err);
-    })
-})
+    });
+});
 
 // ADD/UPDATE shared document
 router.post('/', function(req, res) {
     if (req.body._id) {
-        console.log("UPDATE " + req.body._id)
+        console.log("UPDATE " + req.body._id);
         doc.updateShared(req.body._id, req.body.document,
             function(ret, id) {
                 res.json({
@@ -43,7 +43,7 @@ router.post('/', function(req, res) {
             });
         });
     }
-})
+});
 
 // Download shared document
 router.get('/dl/:identifiant.md', function(req, res) {
@@ -61,10 +61,10 @@ router.get('/dl/:identifiant.md', function(req, res) {
 
 // Download pdf
 router.get('/dl/:identifiant.pdf', function(req, res) {
-    doc.convertShared(req.params.identifiant, 'pdf', function(err, path) {
-        if (!err) {
+    doc.convertShared(req.params.identifiant, 'pdf', function(error, path) {
+        if (!error) {
             res.download(path, req.params.identifiant + ".pdf");
-        } else res.json(err);
+        } else res.render('error',{error});
 
     });
 });
@@ -86,7 +86,7 @@ router.delete('/:id', function(req, res) {
         res.json({
             message: ret
         });
-    })
-})
+    });
+});
 
 module.exports = router;

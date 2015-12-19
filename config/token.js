@@ -4,7 +4,7 @@
 var jwt = require('jwt-simple');
 var User = require('./user-model');
 
-var selection = new Object();
+var selection = {};
 var secret = "8]d5Gz,Q.e5|R}CdfgUl>J-<F";
 var expireDays = 7;
 
@@ -24,7 +24,7 @@ selection.isValidToken = function(req, res, next) {
 	res.status(401).json({
 		error: 'Your token is not valid'
 	});
-}
+};
 
 // Indique si un token est valide ou non
 selection.isValid = function(token, setUser) {

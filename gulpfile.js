@@ -14,7 +14,8 @@ gulp.task('default', ['watch']);
 // configure which files to watch and what tasks to use on file changes
 gulp.task('watch', function() {
     gulp.watch('source/js/*.js', ['build-js']);
-    gulp.watch('source/sass/*.sass', ['build-css'])
+    gulp.watch('source/css/*.css', ['minify-css']);
+    gulp.watch('source/sass/*.sass', ['build-css']);
 });
 
 /**
@@ -28,25 +29,38 @@ gulp.task('jshint', function() {
         .pipe(jshint.reporter('jshint-stylish'));
 });
 
+gulp.task('jshint-server', function() {
+    return gulp.src(['*.js','routes/*.js','models/*.js','config/*.js','bin/*.js'])
+        .pipe(jshint())
+        .pipe(jshint.reporter('jshint-stylish'));
+});
+
 // CSS Lint
 gulp.task('csslint', function() {
     gulp.src('source/css/*.css')
         .pipe(csslint())
-        .pipe(csslint.reporter())
+        .pipe(csslint.reporter());
 });
 
 /**
  * Build and/or minify
  */
 
-gulp.task('build-js', function() {
-    return gulp.src('source/js/*.js')
-        .pipe(sourcemaps.init())
-        .pipe(concat('bundle.js'))
-        //do not uglify if gulp is ran with '--type dev'
-        .pipe(gutil.env.type === 'dev' ? gutil.noop() : uglify())
-        .pipe(sourcemaps.write())
-        .pipe(gulp.dest('public/js'));
+gulp.task('build-js',['jshint'], function() {
+    return [gulp.src(['source/js/tools.js','source/js/editor.js'])
+          .pipe(sourcemaps.init())
+          .pipe(concat('bundle.js'))
+          //do not uglify if gulp is ran with '--type dev'
+          .pipe(gutil.env.type === 'dev' ? gutil.noop() : uglify())
+          .pipe(sourcemaps.write())
+          .pipe(gulp.dest('public/js')),
+        gulp.src(['source/js/tools.js','source/js/shared.js'])
+          .pipe(sourcemaps.init())
+          .pipe(concat('bundle-share.js'))
+          //do not uglify if gulp is ran with '--type dev'
+          .pipe(gutil.env.type === 'dev' ? gutil.noop() : uglify())
+          .pipe(sourcemaps.write())
+          .pipe(gulp.dest('public/js'))];
 });
 
 gulp.task('build-css', function() {

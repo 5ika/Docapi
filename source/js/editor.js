@@ -1,6 +1,6 @@
-function send(forceSave = false) {
+function send() {
     if (editeur.getValue() != lastContent || forceSave)
-        if ($('#title').val() != "") {
+        if ($('#title').val() !== "") {
             console.log("Sauvegarde");
             var parameters = {
                 document: {
@@ -12,7 +12,7 @@ function send(forceSave = false) {
                     toc: $('#toc').is(':checked') || false
                 }
             };
-            if (id != 0) {
+            if (id !== 0) {
                 parameters._id = id;
                 $('.link-' + id + " .doc-title").text(parameters.document.title);
             }
@@ -27,25 +27,23 @@ function send(forceSave = false) {
                     lastContent = parameters.document.content;
                     if (data.redirectToEdit) window.location.href =
                         '/' + id;
-                } else toast(
-                    "Problème serveur. Document non sauvé.",
-                    2000);
+                } else toast("Problème serveur. Document non sauvé.",2000);
             });
         } else toast("Pas de titre. Document non sauvé", 2000);
-};
+}
 
 function del() {
-    if (id != 0)
+    if (id !== 0)
         $.ajax({
             url: "/api/" + id,
             type: "DELETE",
             success: function(data) {
-                window.location.href = '/'
+                window.location.href = '/';
             }
         });
     else toast("Document non sauvé", 2000);
-};
+}
 
 function newDocument() {
-    window.location.href = '/'
+    window.location.href = '/';
 }

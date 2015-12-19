@@ -17,14 +17,12 @@
     "express-session": "^1.11.2",
     "jade": "~1.9.1",
     "jwt-simple": "^0.3.0",
-    "livedb": "^0.5.13",
     "marked": "^0.3.3",
     "mongoose": "^4.0.4",
     "morgan": "~1.5.0",
     "passport": "^0.2.2",
     "passport-local": "^1.0.0",
     "serve-favicon": "~2.2.0",
-    "share": "^0.7.40",
     "shelljs": "^0.5.3"
   },
   "devDependencies": {
@@ -38,6 +36,7 @@
     "gulp-uglify": "^1.5.1",
     "gulp-util": "^3.0.7",
     "jshint": "^2.8.0",
+    "jshint-stylish": "^2.1.0",
     "request": "~2.53.0",
     "time-grunt": "~1.1.0"
   }

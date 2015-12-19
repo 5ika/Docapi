@@ -119,7 +119,7 @@ function deleteUser(req, callback) {
         }, function(err) {
             callback(err);
         });
-    })
-};
+    });
+}
 
 module.exports = router;

@@ -15,8 +15,7 @@ $(document).ready(function() {
 
   // Sauvegarde automatique toutes les minutes
   window.setInterval(function() {
-    if ($('#title').val() != "" && $('#content').val() !=
-      "")
+    if ($('#title').val() !== "" && $('#content').val() !== "")
       send();
   }, 60000);
 });
@@ -33,18 +32,17 @@ function toMarkdown() {
       }, 1500);
     }
   }
-};
+}
 
 function md() {
   var titre = "";
-  if ($('#title').val() != "") titre = "# " + $('#title').val() +
-    "\n";
+  if ($('#title').val() !== "") titre = "# " + $('#title').val() + "\n";
   var content = titre + editeur.getValue();
   //content = content.replace(/(<([^>]+)>)/ig, "");
   content = content.replace(/(<script>)/ig, "[Javascript]\n");
   content = content.replace(/(<\/script>)/ig, "\n[/Javascript]");
-  var md = marked(content);
-  $("#view").html(md);
+  var mdContent = marked(content);
+  $("#view").html(mdContent);
 }
 
 function togglePreview() {
@@ -100,18 +98,21 @@ $("textarea").keydown(function(e) {
   }
 });
 $(document).keydown(function(e) {
+  console.log(e.keyCode);
   if (e.ctrlKey) {
     switch (e.keyCode) {
       //CTRL+S : Sauvegarde manuelle
       case 83:
         send();
-        e.preventDefault();
         break;
-        //CTRL+P : Toggle Preview
-      case 80:
+        //CTRL+O : Toggle Preview
+      case 79:
         togglePreview();
-        e.preventDefault();
+        break;
+      case 80:
+        toggleFullscreen();
         break;
     }
+    e.preventDefault();
   }
-})
+});

@@ -2,5 +2,8 @@ extends layout
 
 block content
   h1= message
-  h2= error.status
+  h3= error.type
+  p #{error.content}
+  
+  h3= error.status
   pre #{error.stack}

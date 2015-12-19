@@ -15,7 +15,7 @@ router.get('/', function(req, res) {
 //Add a new document or modify one existent
 router.post('/', isLoggedIn, function(req, res) {
     if (req.body._id) {
-        console.log("UPDATE " + req.body._id)
+        console.log("UPDATE " + req.body._id);
         doc.update(req.body._id, req.body.document, req.user._id,
             function(ret, id) {
                 res.json({
@@ -58,8 +58,8 @@ router.delete('/:id', isLoggedIn, function(req, res) {
         res.json({
             message: ret
         });
-    })
-})
+    });
+});
 
 // Download document
 router.get('/dl/:id.md', isLoggedIn, function(req, res) {
@@ -76,11 +76,11 @@ router.get('/dl/:id.md', isLoggedIn, function(req, res) {
 
 // Download pdf
 router.get('/dl/:id.pdf', isLoggedIn, function(req, res) {
-    doc.convert(req.params.id, req.user._id, 'pdf', function(err, path) {
-        if (!err) {
+    doc.convert(req.params.id, req.user._id, 'pdf', function(error, path) {
+        if (!error) {
             res.download(path, "Docapi-" + req.params.id +
                 ".pdf");
-        } else res.json(err);
+        } else res.render('error', {error});
 
     });
 });
@@ -113,12 +113,10 @@ function isLoggedIn(req, res, next) {
             console.log("PASSWORD MAIL");
             return next();
         }
-        // if no auth works, send error
+        // if no auth works, redirect user
         else
-            res.json({
-                error: 'No Auth'
-            });
-    })
+            res.redirect('/user/login');
+    });
 }
 
 module.exports = router;

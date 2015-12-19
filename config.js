@@ -8,5 +8,5 @@ var config = {
     db: {
         server: 'mongodb://localhost/docapi'
     },
-}
+};
 module.exports = config;

@@ -10,7 +10,7 @@ var bodyParser = require('body-parser');
 
 var passport = require('passport');
 var flash = require('connect-flash');
-var session = require('express-session')
+var session = require('express-session');
 var mongoose = require('mongoose');
 
 var routes = require('./routes/index');
